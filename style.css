@@ -9,10 +9,14 @@
     --black: #151212;
     --red: #F20530;
 }
+body {
+    background: #CBC8EC;
+
+}
 .container {
     min-width: 320px;
     max-width: 576px;
-    margin: 0;
+    margin: 0 auto;
     background: #CBC8EC;
     overflow: hidden;
 }
@@ -29,12 +33,19 @@
     -ms-border-radius: 0px 0px 24px 24px;
     -o-border-radius: 0px 0px 24px 24px;
     margin-bottom: 50px;
-    padding: 30px 20px;
+    padding: 20px 10px;
     width: 100%;
+}
+.header-logo {
+    transform: scale(85%);
+    -webkit-transform: scale(85%);
+    -moz-transform: scale(85%);
+    -ms-transform: scale(85%);
+    -o-transform: scale(85%);
 }
 .header-button {
     cursor: pointer;
-    padding: 12px;
+    padding: 7px;
     width: fit-content;
     font-weight: 700;
     font-size: 12px;
@@ -175,7 +186,6 @@
     border-radius: 20px;
     padding: 10px;
     min-width: 270px;
-    max-width: 400px;
 }
 .bid-template-2 {
     margin-top: 30px;
@@ -186,7 +196,6 @@
     border-radius: 20px;
     padding: 10px;
     min-width: 270px;
-    max-width: 400px;
 }
 .box-1 {
     display: flex;
@@ -264,7 +273,7 @@
 .contact-head {
     margin-top: 100px;
     font-weight: 700;
-    font-size: 24px;
+    font-size: 20px;
     line-height: 28px;
     text-transform: uppercase;
     margin-left: 20px;
@@ -272,7 +281,7 @@
 .support-head {
     margin-top: 50px;
     font-weight: 700;
-    font-size: 24px;
+    font-size: 20px;
     line-height: 28px;
     text-transform: uppercase;
     margin-left: 20px;
@@ -285,16 +294,16 @@
     align-items: center;
 }
 .contacts-mail a {
-    margin-left: 15px;
+    margin-left: 10px;
     font-weight: 600;
-    font-size: 20px;
+    font-size: 16px;
     line-height: 20px;
     color: var(--black);
 }
 .contacts-inst a {
-    margin-left: 15px;
+    margin-left: 10px;
     font-weight: 600;
-    font-size: 20px;
+    font-size: 16px;
     line-height: 20px;
     color: var(--black);
 }
@@ -320,4 +329,20 @@
     font-size: 20px;
     line-height: 20px;
     color: var(--black);
+}
+@media (min-width: 400px) and (max-width: 460px) {
+    .bid-template-1 {
+        width: 330px;
+    }
+    .bid-template-2 {
+        width: 330px;
+    }
+}
+@media (min-width: 460px) and (max-width: 2000px) {
+    .bid-template-1 {
+        width: 420px;
+    }
+    .bid-template-2 {
+        width: 420px;
+    }
 }
