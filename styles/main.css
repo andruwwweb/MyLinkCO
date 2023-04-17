@@ -356,4 +356,259 @@ body .container .footer .support-tinkoff {
   }
 }
 
+.l-container {
+  min-width: 320px;
+  max-width: 576px;
+  margin: 0 auto;
+  background: #CBC8EC;
+  overflow: hidden;
+}
+.l-container .l-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid #151212;
+  border-left: 1px solid #151212;
+  border-right: 1px solid #151212;
+  border-radius: 0px 0px 24px 24px;
+  margin-bottom: 50px;
+  padding: 20px 10px;
+  width: 100%;
+}
+.l-container .l-header-logo {
+  transform: scale(155%);
+  -webkit-transform: scale(155%);
+  -moz-transform: scale(155%);
+  -ms-transform: scale(155%);
+  -o-transform: scale(155%);
+}
+.l-container .footer {
+  padding-bottom: 20px;
+}
+.l-container .footer .contact-head, .l-container .footer .support-head {
+  margin-top: 100px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 28px;
+  text-transform: uppercase;
+  margin-left: 20px;
+}
+@media (min-width: 460px) and (max-width: 2000px) {
+  .l-container .footer .contact-head, .l-container .footer .support-head {
+    font-size: 26px;
+    line-height: 30px;
+  }
+}
+.l-container .footer .contacts-mail {
+  margin-top: 20px;
+  margin-left: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.l-container .footer .contacts-mail a {
+  margin-left: 10px;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 20px;
+  color: #151212;
+}
+@media (min-width: 460px) and (max-width: 2000px) {
+  .l-container .footer .contacts-mail a {
+    font-size: 22px;
+    line-height: 24px;
+  }
+}
+.l-container .footer .contacts-inst {
+  margin-top: 20px;
+  margin-left: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.l-container .footer .contacts-inst a {
+  margin-left: 10px;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 20px;
+  color: #151212;
+}
+@media (min-width: 460px) and (max-width: 2000px) {
+  .l-container .footer .contacts-inst a {
+    font-size: 22px;
+    line-height: 24px;
+  }
+}
+.l-container .footer .support-zelle {
+  margin-top: 20px;
+  margin-left: 20px;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 20px;
+  color: #151212;
+}
+@media (min-width: 460px) and (max-width: 2000px) {
+  .l-container .footer .support-zelle {
+    font-size: 22px;
+    line-height: 24px;
+  }
+}
+.l-container .footer .support-tinkoff {
+  margin-top: 20px;
+  margin-left: 20px;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 20px;
+  color: #151212;
+}
+@media (min-width: 460px) and (max-width: 2000px) {
+  .l-container .footer .support-tinkoff {
+    font-size: 22px;
+    line-height: 24px;
+  }
+}
+
+.l-main form {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: calc(100% - 20px);
+}
+.l-main form input {
+  font-size: 22px;
+  line-height: 22px;
+  outline: none;
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #151212;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  margin-bottom: 24px;
+}
+.l-main form input::placeholder {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: rgba(21, 18, 18, 0.5);
+}
+.l-main form p {
+  width: 100%;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.l-main form #my-file {
+  display: none;
+}
+.l-main form label[for=my-file] {
+  content: "";
+  width: 100%;
+  height: 300px;
+  display: block;
+  background-image: url(../images/bg-plus.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  color: #333;
+  cursor: pointer;
+  border-radius: 30px;
+  border: 2px solid #151212;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+  margin-bottom: 20px;
+}
+.l-main .price-box {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.l-main .price-box .add-text {
+  position: absolute;
+  width: 100%;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  top: -170px;
+  right: 0;
+  text-align: center;
+}
+.l-main .price-box p {
+  max-width: 40%;
+  margin: 0;
+}
+.l-main .price-box input {
+  padding: 15px;
+  width: 95px;
+  display: block;
+  margin: 0;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  margin-right: 5px;
+}
+@media (min-width: 450px) and (max-width: 2000px) {
+  .l-main .price-box input {
+    width: 130px;
+  }
+}
+.l-main .price-box input::placeholder {
+  font-size: 22px;
+}
+.l-main .price-box .arrow {
+  position: absolute;
+  right: 3px;
+  top: 12px;
+  height: 30px;
+  width: 20px;
+  background: white;
+  z-index: 10;
+}
+.l-main .price-box select {
+  padding: 15px 5px;
+  width: 95px;
+  display: block;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 20px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  outline: none;
+  border: 2px solid #151212;
+}
+.l-main button {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  cursor: pointer;
+  padding: 16px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: #151212;
+  text-transform: uppercase;
+  background: #98F205;
+  border: 2px solid #151212;
+  box-shadow: 5px 5px 0px 1px #151212;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+}
+
 /*# sourceMappingURL=main.css.map */
