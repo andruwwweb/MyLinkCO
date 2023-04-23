@@ -12,6 +12,28 @@
 </head>
 <body>
     <div class="container">
+        <div class="modal">
+            <form class="modal-form">
+                <div class="add-text-modal">Add a photo</div>
+                <label for="modalImage">
+                    <input type="file" name="modalImage" id="modalImage">
+                </label>
+                <p>Nickname</p>
+                <input type="text" placeholder="@instagram, Telegram">
+                <p>Comment</p>
+                <input type="text" placeholder="Optional">
+                <div class="price-box-2">
+                    <input type="number" placeholder="0" min="0">
+                    <div class="arrow"></div>
+                    <select>
+                        <option value="USD" selected>$ USD</option>
+                        <option value="EUR">€ EUR</option>
+                        <option value="RUB">₽ RUB</option>
+                    </select>
+                </div>
+                <button>done</button>
+            </form>
+        </div>
         <header class="header">
             <div class="header-logo">
                 <img src="../staticfiles/images/logo.svg">
@@ -64,6 +86,7 @@
                     </div>
                 </div>
             </div>
+            <div class="show-more">Show more</div>
 
         </main>
         <footer class="footer">

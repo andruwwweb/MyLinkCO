@@ -26,3 +26,47 @@ if (addFrom) {
     })
 }
 
+const modalForm = document.querySelector('.modal-form');
+const modalLabel = document.querySelector('label[for="modalImage"]');
+const addTextModal = document.querySelector('.add-text-modal')
+
+if (modalForm) {
+    modalLabel.addEventListener('change', (e) => {
+        e.preventDefault();
+        modalLabel.textContent = 'Already loaded'
+        modalLabel.style.cssText = `background-image: none; display: flex; justify-content: center; align-items: center; font-size: 30px;`
+        addTextModal.remove()
+    })
+}
+const showMoreButton = document.querySelector('.show-more');
+
+async function loadBids(url, data) {
+    let res = await fetch(url, {
+        method: "POST",
+        headers: {"Content-type": "application/json"},
+        body: data
+    })
+    return res
+}
+
+if (showMoreButton) {
+    showMoreButton.addEventListener('click', () => {
+        loadBids()
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status)
+            } else {
+                return response.json()
+            }
+        })
+        .then(data => {
+            console.log(data)
+        })
+        .catch(error => {
+            console.log(error)
+        })
+        .finally(() => {
+            showMoreButton.style.display = 'none';
+        })
+    })
+}

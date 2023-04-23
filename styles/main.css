@@ -54,19 +54,9 @@ body .container .main {
   width: 100%;
 }
 body .container .main .show-more {
+  margin-top: 30px;
   padding: 12px 35px;
   border: 2px solid #151212;
-  width: fit-content;
-  margin: 30px auto;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 20px;
-  text-transform: uppercase;
-  border-radius: 8px;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  -ms-border-radius: 8px;
-  -o-border-radius: 8px;
 }
 body .container .main .product-image-box {
   width: 100%;

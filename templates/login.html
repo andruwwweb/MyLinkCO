@@ -7,22 +7,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="../staticfiles/styles/main.css">
     <title>MyLinkCO</title>
 </head>
 <body>
     <div class="l-container">
         <header class="l-header">
             <div class="l-header-logo">
-                <img src="./images/logo.svg">
+                <img src="../staticfiles/images/logo.svg">
             </div>
         </header>
         <div class="l-main">
             <form class="add-form" method="post">
                 <p>Nickname</p>
-                <input type="text" placeholder="@instagram, Telegram ">
+                <input type="text" placeholder="@instagram, Telegram" required>
                 <p>Title</p>
-                <input type="text" placeholder="What you're selling ">
+                <input type="text" placeholder="What you're selling" required>
                 <label for="my-file" class="addLabel">
                     <input type="file" id="my-file" name="my-file">
                 </label>
@@ -31,7 +31,7 @@
                 <div class="price-box">
                     <div class="add-text">Add a photo</div>
                     <p>Min price</p>
-                    <input type="number" placeholder="0">
+                    <input type="number" placeholder="0" min="0">
                     <div class="arrow"></div>
                     <select>
                         <option value="USD" selected>$ USD</option>
@@ -45,11 +45,11 @@
         <footer class="footer">
             <div class="contact-head">Contact us</div>
             <div class="contacts-mail">
-                <img src="./images/mail-icon.svg">
+                <img src="../staticfiles/images/mail-icon.svg">
                 <a>mylinkco.contact@gmail.com</a>
             </div>
             <div class="contacts-inst">
-                <img src="./images/inst-icon.svg">
+                <img src="../staticfiles/images/inst-icon.svg">
                 <a>@my.linkco</a>
             </div>
             <div class="support-head">Support our project</div>
@@ -57,5 +57,5 @@
             <div class="support-tinkoff">Tinkoff:</div>
         </footer>
     </div>
-    <script src="./index.js"></script>
+    <script src="../staticfiles/index.js"></script>
 </body>
