@@ -176,8 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="user-box-1">
                 <div class="box-1">
                     <div class="user-image">
-                        ${userImage2}
-                        <img src="${userImage}" alt="image_comment" id="comment_photo">
+                        <img src="${userImage}" alt="image_comment">
                     </div>
                     <div class="user-name-1">${userName}</div>
                 </div>
@@ -187,6 +186,10 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         `;
         bids.append(template1)
+        if (!document.querySelector('.image')) {
+            let imagePlaceHolder = document.querySelector('.user-name-1').substring(1, 3).toUpperCase()
+            document.querySelector('.user-image').innerHTML = imagePlaceHolder;
+        }
     };
     //Создание второго шаблона
     function bidTemplateRight(userImage, userName, userBid, userMessage) {
