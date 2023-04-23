@@ -40,14 +40,16 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     const doBidButton = document.querySelector('.dobid');
     if (doBidButton) {
+        const modalWrapper = document.querySelector('.modal-wrapper')
         doBidButton.addEventListener('click', () => {
             doBidButton.classList.toggle('dobid-active');
+            modalWrapper.style.cssText = 'display: block';
         });
     };
 
-    const modalForm = document.querySelector('.modal-form');
-    const modalLabel = document.querySelector('label[for="modalImage"]');
-    const addTextModal = document.querySelector('.add-text-modal')
+    // const modalForm = document.querySelector('.modal-form');
+    // const modalLabel = document.querySelector('label[for="modalImage"]');
+    // const addTextModal = document.querySelector('.add-text-modal')
     const showMoreButton = document.querySelector('.show-more');
 
 
@@ -159,6 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function createBidsWarning() {
         const bidsContainer = document.querySelector('.bids')
         const warningText = document.createElement('div');
+        warningText.classList.add('warning-text')
         warningText.textContent = 'Here is no bids yet, be the first!';
         bidsContainer.append(warningText);
     }
