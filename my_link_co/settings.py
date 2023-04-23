@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'allauth',
     'allauth.account',
+    'rest_framework',
+    'django_filters',
     'app_auction',
 ]
 
