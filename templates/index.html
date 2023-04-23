@@ -10,9 +10,12 @@
     <link rel="stylesheet" href="/staticfiles/styles/main.css">
     <title>MyLinkCO</title>
 </head>
-<body>
+<body class="main-body">
     <div class="modal-wrapper">
         <div class="modal">
+            <div class="modal-logo">
+                <img class="modal-img" src="../staticfiles/images/logo2.svg" alt="">
+            </div>
             <form class="modal-form" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="add-text-modal">Add a photo</div>
@@ -20,11 +23,11 @@
                     <input type="file" name="modalImage" id="modalImage">
                 </label>
                 <p>Nickname</p>
-                <input type="text" placeholder="@instagram, Telegram">
+                <input type="text" placeholder="@instagram, Telegram" required>
                 <p>Comment</p>
                 <input type="text" placeholder="Optional">
                 <div class="price-box-2">
-                    <input type="number" placeholder="0" min="0">
+                    <input type="number" placeholder="0" min="0" required>
                     <div class="arrow"></div>
                     <select>
                         <option value="USD" selected>$ USD</option>
@@ -32,12 +35,12 @@
                         <option value="RUB">₽ RUB</option>
                     </select>
                 </div>
-                <button>done</button>
+                <button type="submit">done</button>
             </form>
         </div>
     </div>
     <div class="container">
-        <div class="ID"></div>
+        <div class="ID" hidden>{{ product.uuid }}</div>
         <header class="header">
             <div class="header-logo">
                 <img src="/staticfiles/images/logo.svg">

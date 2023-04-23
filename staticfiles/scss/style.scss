@@ -31,7 +31,6 @@ body {
             margin-bottom: 50px;
             padding: 20px 10px;
             width: 100%;
-
             .header-logo {
                 transform: scale(85%);
             }
@@ -139,12 +138,13 @@ body {
                 font-size: 20px;
                 line-height: 24px;
                 transition: all 0.3s ease-in-out;
+                &active {
+                    box-shadow: 0px 0px 0px 1px #151212;
+                    transition: all 0.3s ease-in-out;
+                    transform: translateX(8px) translateY(5px);
+                }
             }
-            .dobid-active {
-                box-shadow: 0px 0px 0px 1px #151212;
-                transition: all 0.3s ease-in-out;
-                transform: translateX(8px) translateY(5px);
-            }
+
             .bids-head {
                 margin-top: 70px;
                 font-weight: 700;
@@ -607,9 +607,10 @@ body {
     }
 }
 .modal-wrapper {
+    overflow: scroll;
     width: 100%;
-    height: fit-content;
-    position: absolute;
+    height: 100%;
+    position: fixed;
     top: 0;
     right: 0;
     background: rgba(21, 18, 18, 0.9);
@@ -627,6 +628,7 @@ body {
 .modal {
     margin: 50px auto;
     width: 320px;
+    height: fit-content;
     border: 2px solid $black;
     border-radius: 20px;
     -webkit-border-radius: 20px;
@@ -642,8 +644,12 @@ body {
     @media (min-width: 450px) and (max-width: 2000px) {
         width: 450px;
     }
+    .modal-logo {
+        margin-left: 20px;
+        width: 50px;
+    }
     .modal-form {
-        margin: 50px auto;
+        margin: 20px auto;
         display: flex;
         flex-direction: column;
         justify-content: center;

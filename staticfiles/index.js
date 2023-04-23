@@ -1,7 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     //Выгрузка первых четырех ставок
-    getQuery('Сюда вставляй урл для запроса первых 4 ставок')
+    const mainBody = document.querySelector('.main-body');
+    const uuidWrapper = document.querySelector('.ID');
+    const id = uuidWrapper.innerText;
+    const getTopBidsDataUrl = `/api/comments/?end_count=4&product_id=${id}`
+    getQuery(getTopBidsDataUrl)
     .then(response => {
         if (!response.ok) {
             throw new Error(response.status)
@@ -23,36 +27,61 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .finally(() => {
         const bids = document.querySelectorAll('bid');
-        if (bids.length < 1) {
-            createBidsWarning();
-            showMoreButton.style.display = 'none'
-        } else if (bids.length <= 4) {
-            showMoreButton.style.display = 'none'
+        if (mainBody) {
+            if (bids.length < 1) {
+                createBidsWarning();
+                showMoreButton.style.display = 'none'
+            } else if (bids.length <= 4) {
+                showMoreButton.style.display = 'none'
+            }
         }
     })
     //Спецэффекты кнопок
     const headerButton = document.querySelector('.header-button');
     if (headerButton) {
         headerButton.addEventListener('click', () => {
-            headerButton.classList.toggle('header-button-active');
             window.location.replace('login.html');
         });
     };
     const doBidButton = document.querySelector('.dobid');
+    const modalWrapper = document.querySelector('.modal-wrapper');
+    const modal = document.querySelector('.modal')
     if (doBidButton) {
-        const modalWrapper = document.querySelector('.modal-wrapper')
         doBidButton.addEventListener('click', () => {
-            doBidButton.classList.toggle('dobid-active');
             modalWrapper.style.cssText = 'display: block';
+            mainBody.style.cssText = 'overflow: hidden;'
         });
     };
+    modalWrapper.addEventListener('click', (e) => {
+        const target = e.target
+        if (!modal.contains(target) || target.classList.contains('modal-img')) {
+            modalWrapper.style.cssText = 'display: none;'
+            mainBody.style.cssText = 'overflow: auto;'
+        }
+    })
 
-    // const modalForm = document.querySelector('.modal-form');
-    // const modalLabel = document.querySelector('label[for="modalImage"]');
-    // const addTextModal = document.querySelector('.add-text-modal')
+
+    // Тут мы делаем так, чтобы загруженное фото отображалось в поле ввода
+    const modalInput = document.querySelector('#modalImage');
+    const modalLabel = document.querySelector('label[for="modalImage"]');
+    const addTextModal = document.querySelector('.add-text-modal');
+
+    modalInput.addEventListener('change', () => {
+        if (modalInput.files.length > 0) {
+            const file = modalInput.files[0];
+            const url = URL.createObjectURL(file);
+            addTextModal.textContent = '';
+            addTextModal.style.cssText = 'top: -290px';
+            modalLabel.style.cssText = `background: url(${url}); background-repeat: no-repeat; background-size: cover; background-position: center;`;
+        } else {
+            modalInput.textContent = 'Loading...';
+            modalInput.style.cssText = 'top: -290px';
+            addLabel.style.cssText = "background: none;";
+        }
+    });
+
+    //Запрос на создание всех остальных транзакций
     const showMoreButton = document.querySelector('.show-more');
-
-
     if (showMoreButton) {
         showMoreButton.addEventListener('click', () => {
             postQuery()
@@ -70,7 +99,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log(error)
             })
             .finally(() => {
-                showMoreButton.style.display = 'none';
+                if (showMoreButton) {
+                    showMoreButton.style.display = 'none';
+                }
             })
         })
     }
@@ -85,6 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const addFromWidth = addFrom.offsetWidth;
         addLabel.style.width = `${addFromWidth}px`;
 
+        // Тут мы делаем так, чтобы загруженное фото отображалось в поле ввода
         fileInput.addEventListener('change', () => {
             if (fileInput.files.length > 0) {
                 const file = fileInput.files[0];
@@ -163,7 +195,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const warningText = document.createElement('div');
         warningText.classList.add('warning-text')
         warningText.textContent = 'Here is no bids yet, be the first!';
-        bidsContainer.append(warningText);
+        if (bidsContainer) {
+            bidsContainer.append(warningText);
+        }
     }
 })
 

@@ -134,7 +134,7 @@ body .container .main .dobid {
   line-height: 24px;
   transition: all 0.3s ease-in-out;
 }
-body .container .main .dobid-active {
+body .container .main .dobidactive {
   box-shadow: 0px 0px 0px 1px #151212;
   transition: all 0.3s ease-in-out;
   transform: translateX(8px) translateY(5px);
@@ -627,9 +627,10 @@ body .container .footer .support-tinkoff {
 }
 
 .modal-wrapper {
+  overflow: scroll;
   width: 100%;
-  height: fit-content;
-  position: absolute;
+  height: 100%;
+  position: fixed;
   top: 0;
   right: 0;
   background: rgba(21, 18, 18, 0.9);
@@ -648,6 +649,7 @@ body .container .footer .support-tinkoff {
 .modal {
   margin: 50px auto;
   width: 320px;
+  height: fit-content;
   border: 2px solid #151212;
   border-radius: 20px;
   -webkit-border-radius: 20px;
@@ -668,8 +670,12 @@ body .container .footer .support-tinkoff {
     width: 450px;
   }
 }
+.modal .modal-logo {
+  margin-left: 20px;
+  width: 50px;
+}
 .modal .modal-form {
-  margin: 50px auto;
+  margin: 20px auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
