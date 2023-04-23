@@ -18,7 +18,8 @@
             </div>
         </header>
         <div class="l-main">
-            <form class="add-form" method="post">
+            <form class="add-form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
                 <p>Nickname</p>
                 <input type="text" placeholder="@instagram, Telegram" required name="userName" id="userName">
                 <p>Title</p>
