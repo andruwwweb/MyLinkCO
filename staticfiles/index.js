@@ -2,47 +2,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //Выгрузка первых четырех ставок
     const mainBody = document.querySelector('.main-body');
-    const uuidWrapper = document.querySelector('.ID');
-    const id = uuidWrapper.innerText;
-    const getTopBidsDataUrl = `/api/comments/?end_count=4&product_id=${id}`
-    getQuery(getTopBidsDataUrl)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(response.status)
-        } else {
-            return response.json()
-        }
-    })
-    .then(data => {
-        data.forEach((object, index) => {
-            if (index % 2 == 0) {
-                bidTemplateLeft(object.pic, object.name, object.price, object.text)
+    if (mainBody) {
+        const uuidWrapper = document.querySelector('.ID');
+        const id = uuidWrapper.innerText;
+        const getTopBidsDataUrl = `/api/comments/?end_count=4&product_id=${id}`
+        getQuery(getTopBidsDataUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status)
             } else {
-                bidTemplateRight(object.pic, object.name, object.price, object.text)
+                return response.json()
             }
         })
-    })
-    .catch(error => {
-        console.log(error);
-    })
-    .finally(() => {
-        const bids = document.querySelectorAll('bid');
-        if (mainBody) {
-            if (bids.length < 1) {
-                createBidsWarning();
-                showMoreButton.style.display = 'none'
-            } else if (bids.length <= 4) {
-                showMoreButton.style.display = 'none'
+        .then(data => {
+            data.forEach((object, index) => {
+                if (index % 2 == 0) {
+                    bidTemplateLeft(object.pic, object.name, object.price, object.text)
+                } else {
+                    bidTemplateRight(object.pic, object.name, object.price, object.text)
+                }
+            })
+        })
+        .catch(error => {
+            console.log(error);
+        })
+        .finally(() => {
+            const bids = document.querySelectorAll('bid');
+            if (mainBody) {
+                if (bids.length < 1) {
+                    createBidsWarning();
+                    showMoreButton.style.display = 'none'
+                } else if (bids.length <= 4) {
+                    showMoreButton.style.display = 'none'
+                }
             }
-        }
-    })
-    //Спецэффекты кнопок
-    const headerButton = document.querySelector('.header-button');
-    if (headerButton) {
-        headerButton.addEventListener('click', () => {
-            window.location.replace('login.html');
         });
-    };
+    //Спецэффекты кнопок
     const doBidButton = document.querySelector('.dobid');
     const modalWrapper = document.querySelector('.modal-wrapper');
     const modal = document.querySelector('.modal')
@@ -105,6 +100,9 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         })
     }
+    }
+
+
 
     //Форма на странице добавления продукта
     const addFrom = document.querySelector('.add-form')
