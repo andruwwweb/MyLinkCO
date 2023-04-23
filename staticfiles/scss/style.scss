@@ -190,6 +190,12 @@ body {
                                 height: 50px;
                                 border: 2px solid $black;
                                 border-radius: 50%;
+                                overflow: hidden;
+                                img {
+                                    width: 50px;
+                                    height: 50px;
+                                    object-fit: cover;
+                                }
                             }
                             .user-name-1 {
                                 font-weight: 600;
@@ -215,6 +221,10 @@ body {
                         font-weight: 400;
                         font-size: 16px;
                         line-height: 140%;
+                        text-align: right;
+                        height: fit-content;
+                        width: 95%;
+                        padding: 0 10px;
                     }
                 }
             }
@@ -255,10 +265,12 @@ body {
                                 height: 50px;
                                 border: 2px solid $black;
                                 border-radius: 50%;
-                                -webkit-border-radius: 50%;
-                                -moz-border-radius: 50%;
-                                -ms-border-radius: 50%;
-                                -o-border-radius: 50%;
+                                overflow: hidden;
+                                img {
+                                    width: 50px;
+                                    height: 50px;
+                                    object-fit: cover;
+                                }
                             }
                             .user-name-2 {
                                 font-weight: 600;
@@ -286,6 +298,9 @@ body {
                         font-size: 16px;
                         line-height: 140%;
                         text-align: right;
+                        height: fit-content;
+                        width: 95%;
+                        padding: 0 10px;
                     }
                 }
             }

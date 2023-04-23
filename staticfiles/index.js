@@ -171,58 +171,79 @@ document.addEventListener('DOMContentLoaded', () => {
         const bids = document.querySelector('.bids')
         const template1 = document.createElement('div');
         template1.classList.add('bid-container-1', 'bid');
-        template1.innerHTML = `
-        <div class="bid-template-1">
-            <div class="user-box-1">
-                <div class="box-1">
-                    <div class="user-image">
-                        <img class="image-1" src="${userImage}" alt="image_comment">
-                    </div>
-                    <div class="user-name-1">${userName}</div>
-                </div>
-                <div class="user-bid">${userBid}</div>
-            </div>
-            <div class="user-message-1">${userMessage}</div>
-        </div>
-        `;
-        bids.append(template1);
         if (!userImage) {
-            let imagePlaceHolder = userName.substring(1, 3).toUpperCase()
-            userImage = imagePlaceHolder;
-            document.querySelector('.image').remove();
-            document.querySelector('.user-image').innerHTML = `
-            <span>${imagePlaceHolder}</span>
-            `
-        };
+            template1.innerHTML = `
+            <div class="bid-template-1">
+                <div class="user-box-1">
+                    <div class="box-1">
+                        <div class="user-image">
+                            <img class="image-1" src="${userImage}" alt="image_comment">
+                        </div>
+                        <div class="user-name-1">${userName}</div>
+                    </div>
+                    <div class="user-bid">${userBid}</div>
+                </div>
+                <div class="user-message-1">${userMessage}</div>
+            </div>
+            `;
+        } else {
+            const imagePlaceHolder = userName.substring(1, 3).toUpperCase()
+            template1.innerHTML = `
+            <div class="bid-template-1">
+                <div class="user-box-1">
+                    <div class="box-1">
+                        <div class="user-image">
+                            <span>${imagePlaceHolder}</span>
+                        </div>
+                        <div class="user-name-1">${userName}</div>
+                    </div>
+                    <div class="user-bid">${userBid}</div>
+                </div>
+                <div class="user-message-1">${userMessage}</div>
+            </div>
+            `;
+        }
+        bids.append(template1);
     };
     //Создание второго шаблона
     function bidTemplateRight(userImage, userName, userBid, userMessage) {
         const bids = document.querySelector('.bids')
-        const template1 = document.createElement('div');
-        template1.classList.add('bid-container-2', 'bid');
-        template1.innerHTML = `
-        <div class="bid-template-2">
-            <div class="user-box-2">
-                <div class="box-2">
-                    <div class="user-image">
-                        <img class="image-2" src="${userImage}" alt="image_comment">
-                    </div>
-                    <div class="user-name-2">${userName}</div>
-                </div>
-                <div class="user-bid">${userBid}</div>
-            </div>
-            <div class="user-message-2">${userMessage}</div>
-        </div>
-        `;
-        bids.append(template1)
+        const template2 = document.createElement('div');
+        template2.classList.add('bid-container-2', 'bid');
         if (!userImage) {
-            let imagePlaceHolder = userName.substring(1, 3).toUpperCase()
-            userImage = imagePlaceHolder;
-            document.querySelector('.image').remove();
-            document.querySelector('.user-image').innerHTML = `
-            <span>${imagePlaceHolder}</span>
-            `
-        };
+            template2.innerHTML = `
+            <div class="bid-template-2">
+                <div class="user-box-2">
+                    <div class="box-2">
+                        <div class="user-image">
+                            <img class="image-2" src="${userImage}" alt="image_comment">
+                        </div>
+                        <div class="user-name-2">${userName}</div>
+                    </div>
+                    <div class="user-bid">${userBid}</div>
+                </div>
+                <div class="user-message-2">${userMessage}</div>
+            </div>
+            `;
+        } else {
+            const imagePlaceHolder = userName.substring(1, 3).toUpperCase()
+            template2.innerHTML = `
+            <div class="bid-template-2">
+                <div class="user-box-2">
+                    <div class="box-2">
+                        <div class="user-image">
+                            <span>${imagePlaceHolder}</span>
+                        </div>
+                        <div class="user-name-2">${userName}</div>
+                    </div>
+                    <div class="user-bid">${userBid}</div>
+                </div>
+                <div class="user-message-2">${userMessage}</div>
+            </div>
+            `;
+        }
+        bids.append(template2);
+
     };
 
     //Создание окна если нет ставок
