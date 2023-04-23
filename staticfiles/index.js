@@ -20,13 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
             //В зависимости от количества обьектов работаем с кнопкой show more
             if (data.length < 1) {
                 createBidsWarning();
-                showMoreButton.style.display = 'none'
-            } else if (data.length == 4) {
-                showMoreButton.style.display = 'none'
             } else if (data.length > 4) {
                 showMoreButton.style.display = 'block'
             }
-
             //Полученый ответ обрабатываем и разделяем на два шаблона
             data.forEach((object, index) => {
                 if (index % 2 == 0) {
@@ -81,36 +77,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
         //Запрос на создание всех остальных транзакций - также рендерим и потом убираем кнопку показать еще
         const showMoreButton = document.querySelector('.show-more');
-        if (showMoreButton) {
-            const getLastBidsDataUrl = `/api/comments/?start_count=5&product_id=${id}`
-            showMoreButton.addEventListener('click', () => {
-                getQuery(getLastBidsDataUrl)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(response.status)
+        const getLastBidsDataUrl = `/api/comments/?start_count=5&product_id=${id}`
+        showMoreButton.addEventListener('click', () => {
+            getQuery(getLastBidsDataUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.status)
+                } else {
+                    return response.json()
+                }
+            })
+            .then(data => {
+                data.forEach((object, index) => {
+                    if (index % 2 == 0) {
+                        bidTemplateLeft(object.pic, object.name, object.price, object.text)
                     } else {
-                        return response.json()
-                    }
-                })
-                .then(data => {
-                    data.forEach((object, index) => {
-                        if (index % 2 == 0) {
-                            bidTemplateLeft(object.pic, object.name, object.price, object.text)
-                        } else {
-                            bidTemplateRight(object.pic, object.name, object.price, object.text)
-                        }
-                    })
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-                .finally(() => {
-                    if (showMoreButton) {
-                        showMoreButton.style.display = 'none';
+                        bidTemplateRight(object.pic, object.name, object.price, object.text)
                     }
                 })
             })
-        }
+            .catch(error => {
+                console.log(error)
+            })
+            .finally(() => {
+                console.log('Already load.');
+                showMoreButton.style.display = 'none';
+            })
+        })
     }
 
     //Страница добавления продукта

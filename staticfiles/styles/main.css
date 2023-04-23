@@ -67,6 +67,7 @@ body .container .main .show-more {
   -moz-border-radius: 8px;
   -ms-border-radius: 8px;
   -o-border-radius: 8px;
+  display: none;
 }
 body .container .main .product-image-box {
   width: 100%;
