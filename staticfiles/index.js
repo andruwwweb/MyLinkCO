@@ -1,11 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    //Выгрузка первых четырех ставок
+    //Главная страница
     const mainBody = document.querySelector('.main-body');
     if (mainBody) {
+        //Берем айдишник продукта из блока и вставляем его в ссылку
         const uuidWrapper = document.querySelector('.ID');
         const id = uuidWrapper.innerText;
-        const getTopBidsDataUrl = `/api/comments/?end_count=4&product_id=${id}`
+        const getTopBidsDataUrl = `/api/comments/?end_count=4&product_id=${id}`;
+        //Делаем гет запрос на сервер чтобы отрендерить первые 4 ставки
         getQuery(getTopBidsDataUrl)
         .then(response => {
             if (!response.ok) {
@@ -15,6 +17,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         })
         .then(data => {
+            //В зависимости от количества обьектов работаем с кнопкой show more
+            if (data.length < 1) {
+                createBidsWarning();
+                showMoreButton.style.display = 'none'
+            } else if (data.length == 4) {
+                showMoreButton.style.display = 'none'
+            }
+            //Полученый ответ обрабатываем и разделяем на два шаблона
             data.forEach((object, index) => {
                 if (index % 2 == 0) {
                     bidTemplateLeft(object.pic, object.name, object.price, object.text)
@@ -27,94 +37,92 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(error);
         })
         .finally(() => {
-            const bids = document.querySelectorAll('bid');
-            if (mainBody) {
-                if (bids.length < 1) {
-                    createBidsWarning();
-                    showMoreButton.style.display = 'none'
-                } else if (bids.length <= 4) {
-                    showMoreButton.style.display = 'none'
-                }
+            console.log('Success')
+        });
+        //Логика модального окна - открывание и закрывание
+        const doBidButton = document.querySelector('.dobid');
+        const modalWrapper = document.querySelector('.modal-wrapper');
+        const modal = document.querySelector('.modal')
+        if (doBidButton) {
+            doBidButton.addEventListener('click', () => {
+                modalWrapper.style.cssText = 'display: block';
+                mainBody.style.cssText = 'overflow: hidden;'
+            });
+        };
+        modalWrapper.addEventListener('click', (e) => {
+            const target = e.target
+            if (!modal.contains(target) || target.classList.contains('modal-img')) {
+                modalWrapper.style.cssText = 'display: none;'
+                mainBody.style.cssText = 'overflow: auto;'
+            }
+        })
+
+        // Тут мы делаем так, чтобы загруженное фото отображалось в поле ввода и убирался текст 
+        const modalInput = document.querySelector('#modalImage');
+        const modalLabel = document.querySelector('label[for="modalImage"]');
+        const addTextModal = document.querySelector('.add-text-modal');
+
+        modalInput.addEventListener('change', () => {
+            if (modalInput.files.length > 0) {
+                const file = modalInput.files[0];
+                const url = URL.createObjectURL(file);
+                addTextModal.textContent = '';
+                addTextModal.style.cssText = 'top: -290px';
+                modalLabel.style.cssText = `background: url(${url}); background-repeat: no-repeat; background-size: cover; background-position: center;`;
+            } else {
+                modalInput.textContent = 'Loading...';
+                modalInput.style.cssText = 'top: -290px';
+                addLabel.style.cssText = "background: none;";
             }
         });
-    //Спецэффекты кнопок
-    const doBidButton = document.querySelector('.dobid');
-    const modalWrapper = document.querySelector('.modal-wrapper');
-    const modal = document.querySelector('.modal')
-    if (doBidButton) {
-        doBidButton.addEventListener('click', () => {
-            modalWrapper.style.cssText = 'display: block';
-            mainBody.style.cssText = 'overflow: hidden;'
-        });
-    };
-    modalWrapper.addEventListener('click', (e) => {
-        const target = e.target
-        if (!modal.contains(target) || target.classList.contains('modal-img')) {
-            modalWrapper.style.cssText = 'display: none;'
-            mainBody.style.cssText = 'overflow: auto;'
+
+        //Запрос на создание всех остальных транзакций - также рендерим и потом убираем кнопку показать еще
+        const showMoreButton = document.querySelector('.show-more');
+        if (showMoreButton) {
+            const getLastBidsDataUrl = `/api/comments/?start_count=5&product_id${id}`
+            showMoreButton.addEventListener('click', () => {
+                getQuery(getLastBidsDataUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(response.status)
+                    } else {
+                        return response.json()
+                    }
+                })
+                .then(data => {
+                    data.forEach((object, index) => {
+                        if (index % 2 == 0) {
+                            bidTemplateLeft(object.pic, object.name, object.price, object.text)
+                        } else {
+                            bidTemplateRight(object.pic, object.name, object.price, object.text)
+                        }
+                    })
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+                .finally(() => {
+                    if (showMoreButton) {
+                        showMoreButton.style.display = 'none';
+                    }
+                })
+            })
         }
-    })
-
-
-    // Тут мы делаем так, чтобы загруженное фото отображалось в поле ввода
-    const modalInput = document.querySelector('#modalImage');
-    const modalLabel = document.querySelector('label[for="modalImage"]');
-    const addTextModal = document.querySelector('.add-text-modal');
-
-    modalInput.addEventListener('change', () => {
-        if (modalInput.files.length > 0) {
-            const file = modalInput.files[0];
-            const url = URL.createObjectURL(file);
-            addTextModal.textContent = '';
-            addTextModal.style.cssText = 'top: -290px';
-            modalLabel.style.cssText = `background: url(${url}); background-repeat: no-repeat; background-size: cover; background-position: center;`;
-        } else {
-            modalInput.textContent = 'Loading...';
-            modalInput.style.cssText = 'top: -290px';
-            addLabel.style.cssText = "background: none;";
-        }
-    });
-
-    //Запрос на создание всех остальных транзакций
-    const showMoreButton = document.querySelector('.show-more');
-    if (showMoreButton) {
-        showMoreButton.addEventListener('click', () => {
-            postQuery()
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(response.status)
-                } else {
-                    return response.json()
-                }
-            })
-            .then(data => {
-                console.log(data)
-            })
-            .catch(error => {
-                console.log(error)
-            })
-            .finally(() => {
-                if (showMoreButton) {
-                    showMoreButton.style.display = 'none';
-                }
-            })
-        })
-    }
     }
 
-
-
-    //Форма на странице добавления продукта
-    const addFrom = document.querySelector('.add-form')
-    if (addFrom) {
+    //Страница добавления продукта
+    const addBody = document.querySelector('.add-body')
+    if (addBody) {
+        const addFrom = document.querySelector('.add-form')
         const addText = document.querySelector('.add-text');
         const fileInput = document.querySelector('#imageFile');
         const addLabel = document.querySelector('.addLabel');
 
+        //Задаем ширину лейбла 
         const addFromWidth = addFrom.offsetWidth;
         addLabel.style.width = `${addFromWidth}px`;
 
-        // Тут мы делаем так, чтобы загруженное фото отображалось в поле ввода
+        // Тут тоже делаем так, чтобы загруженное фото отображалось в поле ввода и убирался текст
         fileInput.addEventListener('change', () => {
             if (fileInput.files.length > 0) {
                 const file = fileInput.files[0];
@@ -128,7 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 addLabel.style.cssText = "background: none;";
             }
         });
-
     };
 
 
@@ -137,7 +144,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+    //Функции
 
+    //Пост запрос
     async function postQuery(url, data) {
         let res = await fetch(url, {
             method: "POST",
@@ -146,13 +155,19 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         return res
     };
+    //Гет запрос
     async function getQuery(url) {
         let result = await fetch(url, {
             method: "GET"
         });
         return result;
     };
+    //Создание одного шаблона
     function bidTemplateLeft(userImage, userName, userBid, userMessage) {
+        if (!userImage) {
+            let imagePlaceHolder = userName.substring(1, 3).toUpperCase()
+            userImage = imagePlaceHolder
+        }
         const bids = document.querySelector('.bids')
         const template1 = document.createElement('div');
         template1.classList.add('bid-container-1', 'bid');
@@ -171,8 +186,13 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         `;
         bids.append(template1)
-    }
+    };
+    //Создание второго шаблона
     function bidTemplateRight(userImage, userName, userBid, userMessage) {
+        if (!userImage) {
+            let imagePlaceHolder = userName.substring(1, 3).toUpperCase()
+            userImage = imagePlaceHolder
+        }
         const bids = document.querySelector('.bids')
         const template1 = document.createElement('div');
         template1.classList.add('bid-container-2', 'bid');
@@ -192,6 +212,8 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         bids.append(template1)
     };
+
+    //Создание окна если нет ставок
     function createBidsWarning() {
         const bidsContainer = document.querySelector('.bids')
         const warningText = document.createElement('div');
@@ -200,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (bidsContainer) {
             bidsContainer.append(warningText);
         }
-    }
+    };
 })
 
 
