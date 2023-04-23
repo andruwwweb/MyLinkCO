@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (headerButton) {
         headerButton.addEventListener('click', () => {
             headerButton.classList.toggle('header-button-active');
-            window.location.replace('login.html');
         });
     };
     const doBidButton = document.querySelector('.dobid');

@@ -16,7 +16,7 @@
             <div class="modal-logo">
                 <img class="modal-img" src="../staticfiles/images/logo2.svg" alt="">
             </div>
-            <form class="modal-form" enctype="multipart/form-data">
+            <form class="modal-form" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="add-text-modal">Add a photo</div>
                 <label for="modalImage">
@@ -29,7 +29,7 @@
                 <div class="price-box-2">
                     <input type="number" placeholder="0" min="0" required name="newPrice">
                     <div class="arrow"></div>
-                    <select>
+                    <select name="newPriceValue" id="newPriceValue">
                         <option value="USD" selected>$ USD</option>
                         <option value="EUR">€ EUR</option>
                         <option value="RUB">₽ RUB</option>
@@ -45,11 +45,13 @@
             <div class="header-logo">
                 <img src="/staticfiles/images/logo.svg">
             </div>
-            <div class="header-button">add a product</div>
+            <form action="/product/new/">
+                <button class="header-button">Add a product</button>
+            </form>
         </header>
         <main class="main">
             <div class="product-image-box">
-                <img src="/{{ product.image }}" alt="connect">
+                <img src="/{{ product.image }}" alt="image_product">
             </div>
             <div class="product-name">{{ product.title }}</div>
             <div class="copy-button">

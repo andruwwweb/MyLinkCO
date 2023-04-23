@@ -160,7 +160,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="bid-template-1">
             <div class="user-box-1">
                 <div class="box-1">
-                    <div class="user-image">${userImage}</div>
+                    <div class="user-image">
+                        <img src="${userImage}" alt="image_comment">
+                    </div>
                     <div class="user-name-1">${userName}</div>
                 </div>
                 <div class="user-bid">${userBid}</div>
@@ -178,7 +180,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="bid-template-2">
             <div class="user-box-2">
                 <div class="box-2">
-                    <div class="user-image">${userImage}</div>
+                    <div class="user-image">
+                        <img src="${userImage}" alt="image_comment">
+                    </div>
                     <div class="user-name-2">${userName}</div>
                 </div>
                 <div class="user-bid">${userBid}</div>
