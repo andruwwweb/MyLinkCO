@@ -12,9 +12,23 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(data => {
         data.forEach((object, index) => {
             if (index % 2 == 0) {
-
+                bidTemplateLeft(object.pic, object.name, object.price, object.text)
+            } else {
+                bidTemplateRight(object.pic, object.name, object.price, object.text)
             }
         })
+    })
+    .catch(error => {
+        console.log(error);
+    })
+    .finally(() => {
+        const bids = document.querySelectorAll('bid');
+        if (bids.length < 1) {
+            createBidsWarning();
+            showMoreButton.style.display = 'none'
+        } else if (bids.length <= 4) {
+            showMoreButton.style.display = 'none'
+        }
     })
     //Спецэффекты кнопок
     const headerButton = document.querySelector('.header-button');
@@ -83,14 +97,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-    }
-
-
-    function renderServerResponse(response) {
-        const statusModal = document.createElement('div');
-        statusModal.style.cssText = 'width: 100%; height: 100%; display: flex; position: absolute; top: 0; right: 0; justify-content: center; align-items: center';
-        statusModal.innerHTML = `<div class="response-wrapper">${response}</div>`
     };
+
+
+
+
+
+
+
+
     async function postQuery(url, data) {
         let res = await fetch(url, {
             method: "POST",
@@ -105,7 +120,48 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         return result;
     };
-    
+    function bidTemplateLeft(userImage, userName, userBid, userMessage) {
+        const bids = document.querySelector('.bids')
+        const template1 = document.createElement('div');
+        template1.classList.add('bid-container-1', 'bid');
+        template1.innerHTML = `
+        <div class="bid-template-1">
+            <div class="user-box-1">
+                <div class="box-1">
+                    <div class="user-image">${userImage}</div>
+                    <div class="user-name-1">${userName}</div>
+                </div>
+                <div class="user-bid">${userBid}</div>
+            </div>
+            <div class="user-message-1">${userMessage}</div>
+        </div>
+        `;
+        bids.append(template1)
+    }
+    function bidTemplateRight(userImage, userName, userBid, userMessage) {
+        const bids = document.querySelector('.bids')
+        const template1 = document.createElement('div');
+        template1.classList.add('bid-container-2', 'bid');
+        template1.innerHTML = `
+        <div class="bid-template-2">
+            <div class="user-box-2">
+                <div class="box-2">
+                    <div class="user-image">${userImage}</div>
+                    <div class="user-name-2">${userName}</div>
+                </div>
+                <div class="user-bid">${userBid}</div>
+            </div>
+            <div class="user-message-2">${userMessage}</div>
+        </div>
+        `;
+        bids.append(template1)
+    };
+    function createBidsWarning() {
+        const bidsContainer = document.querySelector('.bids')
+        const warningText = document.createElement('div');
+        warningText.textContent = 'Here is no bids yet, be the first!';
+        bidsContainer.append(warningText);
+    }
 })
 
 

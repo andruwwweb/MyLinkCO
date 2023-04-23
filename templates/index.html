@@ -14,7 +14,8 @@
     <div class="container">
         <div class="ID"></div>
         <div class="modal">
-            <form class="modal-form">
+            <form class="modal-form" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="add-text-modal">Add a photo</div>
                 <label for="modalImage">
                     <input type="file" name="modalImage" id="modalImage">
@@ -59,6 +60,7 @@
             <div class="dobid">do bid</div>
             <div class="bids-head">bids</div>
 
+            <div class="bids"></div>
             <div class="bid-container-1">
                 <div class="bid-template-1">
                     <div class="user-box-1">
