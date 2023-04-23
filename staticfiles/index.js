@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="user-box-1">
                 <div class="box-1">
                     <div class="user-image">
-                        <img src="${userImage}" alt="image_comment">
+                        <img class="image-1" src="${userImage}" alt="image_comment">
                     </div>
                     <div class="user-name-1">${userName}</div>
                 </div>
@@ -185,18 +185,18 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="user-message-1">${userMessage}</div>
         </div>
         `;
-        bids.append(template1)
-        if (!document.querySelector('.image')) {
-            let imagePlaceHolder = document.querySelector('.user-name-1').substring(1, 3).toUpperCase()
-            document.querySelector('.user-image').innerHTML = imagePlaceHolder;
-        }
+        bids.append(template1);
+        if (!userImage) {
+            let imagePlaceHolder = userName.substring(1, 3).toUpperCase()
+            userImage = imagePlaceHolder;
+            document.querySelector('.image').remove();
+            document.querySelector('.user-image').innerHTML = `
+            <span>${imagePlaceHolder}</span>
+            `
+        };
     };
     //Создание второго шаблона
     function bidTemplateRight(userImage, userName, userBid, userMessage) {
-        if (!userImage) {
-            let imagePlaceHolder = userName.substring(1, 3).toUpperCase()
-            userImage2 = imagePlaceHolder
-        }
         const bids = document.querySelector('.bids')
         const template1 = document.createElement('div');
         template1.classList.add('bid-container-2', 'bid');
@@ -205,8 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="user-box-2">
                 <div class="box-2">
                     <div class="user-image">
-                        ${userImage2}
-                        <img src="${userImage}" alt="image_comment">
+                        <img class="image-2" src="${userImage}" alt="image_comment">
                     </div>
                     <div class="user-name-2">${userName}</div>
                 </div>
@@ -216,6 +215,14 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         `;
         bids.append(template1)
+        if (!userImage) {
+            let imagePlaceHolder = userName.substring(1, 3).toUpperCase()
+            userImage = imagePlaceHolder;
+            document.querySelector('.image').remove();
+            document.querySelector('.user-image').innerHTML = `
+            <span>${imagePlaceHolder}</span>
+            `
+        };
     };
 
     //Создание окна если нет ставок
