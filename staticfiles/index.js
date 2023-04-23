@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function bidTemplateLeft(userImage, userName, userBid, userMessage) {
         if (!userImage) {
             let imagePlaceHolder = userName.substring(1, 3).toUpperCase()
-            userImage = imagePlaceHolder
+            userImage2 = imagePlaceHolder
         }
         const bids = document.querySelector('.bids')
         const template1 = document.createElement('div');
@@ -176,7 +176,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="user-box-1">
                 <div class="box-1">
                     <div class="user-image">
-                        <img src="${userImage}" alt="image_comment">
+                        ${userImage2}
+                        <img src="${userImage}" alt="image_comment" id="comment_photo">
                     </div>
                     <div class="user-name-1">${userName}</div>
                 </div>
@@ -191,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function bidTemplateRight(userImage, userName, userBid, userMessage) {
         if (!userImage) {
             let imagePlaceHolder = userName.substring(1, 3).toUpperCase()
-            userImage = imagePlaceHolder
+            userImage2 = imagePlaceHolder
         }
         const bids = document.querySelector('.bids')
         const template1 = document.createElement('div');
@@ -201,6 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="user-box-2">
                 <div class="box-2">
                     <div class="user-image">
+                        ${userImage2}
                         <img src="${userImage}" alt="image_comment">
                     </div>
                     <div class="user-name-2">${userName}</div>
