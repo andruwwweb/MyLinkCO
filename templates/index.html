@@ -43,18 +43,18 @@
         </header>
         <main class="main">
             <div class="product-image-box">
-                <img src="/staticfiles/images/product-example.png">
+                <img src="/{{ product.image }}" alt="connect">
             </div>
-            <div class="product-name">iphone 13 pro max</div>
+            <div class="product-name">{{ product.title }}</div>
             <div class="copy-button">
                 <img src="/staticfiles/images/copylink.svg">
             </div>
             <div class="product-sale">
-                <div class="sailer-name">Seller: @vasiliy</div>
-                <div class="min-price">min: $1000</div>
+                <div class="sailer-name">Seller: {{ product.author }}</div>
+                <div class="min-price">min: {{ product.min_price }}</div>
             </div>
             <div class="product-description">
-                I will sell iPhone 13 pro max. Sky blue color, 128 GB. The phone was bought in 2022, in good condition.
+                {{ product.text }}
             </div>
             <div class="dobid">do bid</div>
             <div class="bids-head">bids</div>
