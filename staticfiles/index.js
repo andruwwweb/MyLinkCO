@@ -11,36 +11,14 @@ if (doBidButton) {
     });
 }
 
-const addFrom = document.querySelector('.add-form')
-const addLabel = document.querySelector('label[for="my-file"]');
-const addText = document.querySelector('.add-text')
 
-if (addFrom) {
-    const addFromWidth = addFrom.offsetWidth;
-    addLabel.style.width = `${addFromWidth}px`;
-    addLabel.addEventListener('change', (e) => {
-        e.preventDefault();
-        addLabel.textContent = 'Already loaded'
-        addLabel.style.cssText = `background-image: none; display: flex; justify-content: center; align-items: center; font-size: 30px;`
-        addText.remove()
-    })
-}
 
 const modalForm = document.querySelector('.modal-form');
 const modalLabel = document.querySelector('label[for="modalImage"]');
 const addTextModal = document.querySelector('.add-text-modal')
-
-if (modalForm) {
-    modalLabel.addEventListener('change', (e) => {
-        e.preventDefault();
-        modalLabel.textContent = 'Already loaded'
-        modalLabel.style.cssText = `background-image: none; display: flex; justify-content: center; align-items: center; font-size: 30px;`
-        addTextModal.remove()
-    })
-}
 const showMoreButton = document.querySelector('.show-more');
 
-async function loadBids(url, data) {
+async function postQuery(url, data) {
     let res = await fetch(url, {
         method: "POST",
         headers: {"Content-type": "application/json"},
@@ -48,10 +26,21 @@ async function loadBids(url, data) {
     })
     return res
 }
+function formDataToJson(formData) {
+    const jsonData = {};
+    for (const [key, value] of formData.entries()) {
+      if (value instanceof File) {
+        jsonData[key] = value.name;
+      } else {
+        jsonData[key] = value;
+      }
+    }
+    return jsonData;
+}
 
 if (showMoreButton) {
     showMoreButton.addEventListener('click', () => {
-        loadBids()
+        postQuery()
         .then(response => {
             if (!response.ok) {
                 throw new Error(response.status)
@@ -70,3 +59,37 @@ if (showMoreButton) {
         })
     })
 }
+const addFrom = document.querySelector('.add-form')
+if (addFrom) {
+    const addText = document.querySelector('.add-text');
+    const fileInput = document.querySelector('#imageFile');
+    const addLabel = document.querySelector('.addLabel');
+
+    const addFromWidth = addFrom.offsetWidth;
+    addLabel.style.width = `${addFromWidth}px`;
+
+    fileInput.addEventListener('change', () => {
+        if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            const url = URL.createObjectURL(file);
+            addText.textContent = '';
+            addText.style.cssText = 'top: -290px';
+            addLabel.style.cssText = `background: url(${url}); background-repeat: no-repeat; background-size: cover; background-position: center;`;
+        } else {
+            addText.textContent = 'Loading...';
+            addText.style.cssText = 'top: -290px';
+            addLabel.style.cssText = "background: none;";
+        }
+    });
+
+    addFrom.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const data = new FormData(addFrom);
+        const file = fileInput.files[0];
+        data.append('imageFile', file);
+      
+        const jsonBody = formDataToJson(data);
+        console.log(jsonBody);
+    })
+}
+
