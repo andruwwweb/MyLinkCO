@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //Запрос на создание всех остальных транзакций - также рендерим и потом убираем кнопку показать еще
         const showMoreButton = document.querySelector('.show-more');
         if (showMoreButton) {
-            const getLastBidsDataUrl = `/api/comments/?start_count=5&product_id${id}`
+            const getLastBidsDataUrl = `/api/comments/?start_count=5&product_id=${id}`
             showMoreButton.addEventListener('click', () => {
                 getQuery(getLastBidsDataUrl)
                 .then(response => {
@@ -172,12 +172,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const template1 = document.createElement('div');
         template1.classList.add('bid-container-1', 'bid');
         if (!userImage) {
+            const imagePlaceHolder = userName.substring(1, 3).toUpperCase()
             template1.innerHTML = `
             <div class="bid-template-1">
                 <div class="user-box-1">
                     <div class="box-1">
                         <div class="user-image">
-                            <img class="image-1" src="${userImage}" alt="image_comment">
+                            <span>${imagePlaceHolder}</span>
                         </div>
                         <div class="user-name-1">${userName}</div>
                     </div>
@@ -187,13 +188,12 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             `;
         } else {
-            const imagePlaceHolder = userName.substring(1, 3).toUpperCase()
             template1.innerHTML = `
             <div class="bid-template-1">
                 <div class="user-box-1">
                     <div class="box-1">
                         <div class="user-image">
-                            <span>${imagePlaceHolder}</span>
+                            <img class="image-1" src="${userImage}" alt="image_comment">
                         </div>
                         <div class="user-name-1">${userName}</div>
                     </div>
@@ -211,12 +211,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const template2 = document.createElement('div');
         template2.classList.add('bid-container-2', 'bid');
         if (!userImage) {
+            const imagePlaceHolder = userName.substring(1, 3).toUpperCase()
             template2.innerHTML = `
             <div class="bid-template-2">
                 <div class="user-box-2">
                     <div class="box-2">
                         <div class="user-image">
-                            <img class="image-2" src="${userImage}" alt="image_comment">
+                            <span>${imagePlaceHolder}</span>
                         </div>
                         <div class="user-name-2">${userName}</div>
                     </div>
@@ -226,13 +227,12 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             `;
         } else {
-            const imagePlaceHolder = userName.substring(1, 3).toUpperCase()
             template2.innerHTML = `
             <div class="bid-template-2">
                 <div class="user-box-2">
                     <div class="box-2">
                         <div class="user-image">
-                            <span>${imagePlaceHolder}</span>
+                            <img class="image-2" src="${userImage}" alt="image_comment">
                         </div>
                         <div class="user-name-2">${userName}</div>
                     </div>
