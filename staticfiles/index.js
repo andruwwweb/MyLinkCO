@@ -18,12 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         })
         .then(data => {
-            //В зависимости от количества обьектов работаем с кнопкой show more
-            if (data.length < 1) {
-                createBidsWarning();
-            } else if (data.length > 4) {
-                showMoreButton.style.display = 'block'
-            }
             //Полученый ответ обрабатываем и разделяем на два шаблона
             data.forEach((object, index) => {
                 if (index % 2 == 0) {
@@ -37,7 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(error);
         })
         .finally(() => {
-            console.log('Success')
+            const bidItems = document.querySelectorAll('.bid');
+            if (bidItems.length == 4) {
+                showMoreButton.style.display = 'block'
+            }
         });
         //Логика модального окна - открывание и закрывание
         const doBidButton = document.querySelector('.dobid');
