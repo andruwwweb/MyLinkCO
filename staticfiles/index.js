@@ -23,7 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 showMoreButton.style.display = 'none'
             } else if (data.length == 4) {
                 showMoreButton.style.display = 'none'
+            } else if (data.length > 4) {
+                showMoreButton.style.display = 'block'
             }
+
             //Полученый ответ обрабатываем и разделяем на два шаблона
             data.forEach((object, index) => {
                 if (index % 2 == 0) {
