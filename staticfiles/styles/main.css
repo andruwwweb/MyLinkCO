@@ -775,4 +775,17 @@ body .container .footer .support-tinkoff {
   transition: all 0.3s ease-in-out;
 }
 
+.response-wrapper {
+  padding: 16px 24px;
+  width: fit-content;
+  height: fit-content;
+  border: 2px solid #151212;
+  border-radius: 16px;
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+  -ms-border-radius: 16px;
+  -o-border-radius: 16px;
+  color: #151212;
+}
+
 /*# sourceMappingURL=main.css.map */

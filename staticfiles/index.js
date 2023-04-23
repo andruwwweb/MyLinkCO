@@ -11,8 +11,6 @@ if (doBidButton) {
     });
 }
 
-
-
 const modalForm = document.querySelector('.modal-form');
 const modalLabel = document.querySelector('label[for="modalImage"]');
 const addTextModal = document.querySelector('.add-text-modal')
@@ -25,17 +23,6 @@ async function postQuery(url, data) {
         body: data
     })
     return res
-}
-function formDataToJson(formData) {
-    const jsonData = {};
-    for (const [key, value] of formData.entries()) {
-      if (value instanceof File) {
-        jsonData[key] = value.name;
-      } else {
-        jsonData[key] = value;
-      }
-    }
-    return jsonData;
 }
 
 if (showMoreButton) {
@@ -86,10 +73,39 @@ if (addFrom) {
         e.preventDefault();
         const data = new FormData(addFrom);
         const file = fileInput.files[0];
-        data.append('imageFile', file);
-      
-        const jsonBody = formDataToJson(data);
-        console.log(jsonBody);
+        const url = URL.createObjectURL(file);
+        let jsonBody = formDataToJson(data);
+        jsonBody.imageFile = url;
+        postQuery('/product/create/', jsonBody)
+        .then(response => {
+            if(!response.ok) {
+                throw new Error(response.status)
+            }
+            else {
+                return;
+            }
+        })
+        .catch(error => {
+            console.error(error)
+            renderServerResponse(data.message)
+        })
+        .finally(() => {
+            addFrom.reset()
+        })
     })
+
+}
+
+function formDataToJson(formData) {
+    const jsonData = {};
+    for (const [key, value] of formData.entries()) {
+        jsonData[key] = value;
+    }
+    return jsonData;
+}
+function renderServerResponse(response) {
+    const statusModal = document.createElement('div');
+    statusModal.style.cssText = 'width: 100%; height: 100%; display: flex; position: absolute; top: 0; right: 0; justify-content: center; align-items: center';
+    statusModal.innerHTML = `<div class="response-wrapper">${response}</div>`
 }
 
