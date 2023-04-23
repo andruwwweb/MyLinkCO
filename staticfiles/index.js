@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const uuidWrapper = document.querySelector('.ID');
         const id = uuidWrapper.innerText;
         const getTopBidsDataUrl = `/api/comments/?end_count=4&product_id=${id}`;
+        const showMoreButton = document.querySelector('.show-more');
         //Делаем гет запрос на сервер чтобы отрендерить первые 4 ставки
         getQuery(getTopBidsDataUrl)
         .then(response => {
@@ -76,7 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         //Запрос на создание всех остальных транзакций - также рендерим и потом убираем кнопку показать еще
-        const showMoreButton = document.querySelector('.show-more');
         const getLastBidsDataUrl = `/api/comments/?start_count=5&product_id=${id}`
         showMoreButton.addEventListener('click', () => {
             getQuery(getLastBidsDataUrl)
