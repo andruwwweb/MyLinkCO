@@ -85,20 +85,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             })
             .then(data => {
-                data.forEach((object, index) => {
-                    if (index % 2 == 0) {
-                        bidTemplateLeft(object.pic, object.name, object.price, object.text)
-                    } else {
-                        bidTemplateRight(object.pic, object.name, object.price, object.text)
-                    }
-                })
+                if (data.length == 0) {
+                    showMoreButton.textContent = "No more bids";
+                    setTimeout(() => {
+                        showMoreButton.style.display = 'none';
+                    }, 2000)
+                } else {
+                    data.forEach((object, index) => {
+                        if (index % 2 == 0) {
+                            bidTemplateLeft(object.pic, object.name, object.price, object.text)
+                        } else {
+                            bidTemplateRight(object.pic, object.name, object.price, object.text)
+                        }
+                        showMoreButton.style.display = 'none';
+                    })
+                }
+
             })
             .catch(error => {
                 console.log(error)
             })
             .finally(() => {
                 console.log('Already load.');
-                showMoreButton.style.display = 'none';
+                
             })
         })
     }
