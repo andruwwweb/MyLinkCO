@@ -20,5 +20,6 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('app_auction.urls'))
+    path('', include('app_auction.urls')),
+    path('api/', include('app_auction.api.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

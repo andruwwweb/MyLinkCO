@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from app_auction.models import Product
+from app_auction.models import Product, Comment
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -9,4 +9,11 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ['created_at']
 
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['name', 'price', 'product']
+    fields = ['name', 'pic', 'price', 'product', 'text']
+    list_filter = ['created_at']
+
+
 admin.site.register(Product, ProductAdmin)
+admin.site.register(Comment, CommentAdmin)
