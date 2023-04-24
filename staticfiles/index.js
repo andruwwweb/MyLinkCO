@@ -18,14 +18,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         })
         .then(data => {
-            //Полученый ответ обрабатываем и разделяем на два шаблона
-            data.forEach((object, index) => {
-                if (index % 2 == 0) {
-                    bidTemplateLeft(object.pic, object.name, object.price, object.text)
-                } else {
-                    bidTemplateRight(object.pic, object.name, object.price, object.text)
-                }
-            })
+            if(data.length == 0) {
+                createBidsWarning()
+            } else {
+                //Полученый ответ обрабатываем и разделяем на два шаблона
+                data.forEach((object, index) => {
+                    if (index % 2 == 0) {
+                        bidTemplate(object.pic, object.name, object.price, object.text, 1)
+                    } else {
+                        bidTemplate(object.pic, object.name, object.price, object.text, 2)
+                    }
+                })
+            }
+
         })
         .catch(error => {
             console.log(error);
@@ -93,9 +98,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     data.forEach((object, index) => {
                         if (index % 2 == 0) {
-                            bidTemplateLeft(object.pic, object.name, object.price, object.text)
+                            bidTemplate(object.pic, object.name, object.price, object.text, 1)
                         } else {
-                            bidTemplateRight(object.pic, object.name, object.price, object.text)
+                            bidTemplate(object.pic, object.name, object.price, object.text, 2)
                         }
                         showMoreButton.style.display = 'none';
                     })
@@ -148,15 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //Функции
 
-    //Пост запрос
-    async function postQuery(url, data) {
-        let res = await fetch(url, {
-            method: "POST",
-            headers: {"Content-type": "application/json"},
-            body: data
-        })
-        return res
-    };
+
     //Гет запрос
     async function getQuery(url) {
         let result = await fetch(url, {
@@ -164,88 +161,48 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         return result;
     };
-    //Создание одного шаблона
-    function bidTemplateLeft(userImage, userName, userBid, userMessage) {
+    //Создание шаблона
+    function bidTemplate(userImage, userName, userBid, userMessage, templateNumber) {
         if (!userImage) {
             let imagePlaceHolder = userName.substring(1, 3).toUpperCase()
-            userImage2 = imagePlaceHolder
+            userImage = imagePlaceHolder
         }
         const bids = document.querySelector('.bids')
-        const template1 = document.createElement('div');
-        template1.classList.add('bid-container-1', 'bid');
+        const template = document.createElement('div');
+        template.classList.add(`bid-container-${templateNumber}`, 'bid');
         if (!userImage) {
             const imagePlaceHolder = userName.substring(1, 3).toUpperCase()
-            template1.innerHTML = `
-            <div class="bid-template-1">
-                <div class="user-box-1">
-                    <div class="box-1">
+            template.innerHTML = `
+            <div class="bid-template-${templateNumber}">
+                <div class="user-box-${templateNumber}">
+                    <div class="box-${templateNumber}">
                         <div class="user-image">
                             <span>${imagePlaceHolder}</span>
                         </div>
-                        <div class="user-name-1">${userName}</div>
+                        <div class="user-name-${templateNumber}">${userName}</div>
                     </div>
                     <div class="user-bid">${userBid}</div>
                 </div>
-                <div class="user-message-1">${userMessage}</div>
+                <div class="user-message-${templateNumber}">${userMessage}</div>
             </div>
             `;
         } else {
-            template1.innerHTML = `
-            <div class="bid-template-1">
-                <div class="user-box-1">
-                    <div class="box-1">
+            template.innerHTML = `
+            <div class="bid-template-${templateNumber}">
+                <div class="user-box-${templateNumber}">
+                    <div class="box-${templateNumber}">
                         <div class="user-image">
-                            <img class="image-1" src="${userImage}" alt="image_comment">
+                            <img class="image-${templateNumber}" src="${userImage}" alt="image_comment">
                         </div>
-                        <div class="user-name-1">${userName}</div>
+                        <div class="user-name-${templateNumber}">${userName}</div>
                     </div>
                     <div class="user-bid">${userBid}</div>
                 </div>
-                <div class="user-message-1">${userMessage}</div>
+                <div class="user-message-${templateNumber}">${userMessage}</div>
             </div>
             `;
         }
-        bids.append(template1);
-    };
-    //Создание второго шаблона
-    function bidTemplateRight(userImage, userName, userBid, userMessage) {
-        const bids = document.querySelector('.bids')
-        const template2 = document.createElement('div');
-        template2.classList.add('bid-container-2', 'bid');
-        if (!userImage) {
-            const imagePlaceHolder = userName.substring(1, 3).toUpperCase()
-            template2.innerHTML = `
-            <div class="bid-template-2">
-                <div class="user-box-2">
-                    <div class="box-2">
-                        <div class="user-image">
-                            <span>${imagePlaceHolder}</span>
-                        </div>
-                        <div class="user-name-2">${userName}</div>
-                    </div>
-                    <div class="user-bid">${userBid}</div>
-                </div>
-                <div class="user-message-2">${userMessage}</div>
-            </div>
-            `;
-        } else {
-            template2.innerHTML = `
-            <div class="bid-template-2">
-                <div class="user-box-2">
-                    <div class="box-2">
-                        <div class="user-image">
-                            <img class="image-2" src="${userImage}" alt="image_comment">
-                        </div>
-                        <div class="user-name-2">${userName}</div>
-                    </div>
-                    <div class="user-bid">${userBid}</div>
-                </div>
-                <div class="user-message-2">${userMessage}</div>
-            </div>
-            `;
-        }
-        bids.append(template2);
-
+        bids.append(template);
     };
 
     //Создание окна если нет ставок
