@@ -6,8 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
         //Берем айдишник продукта из блока и вставляем его в ссылку
         const uuidWrapper = document.querySelector('.ID');
         const id = uuidWrapper.innerText;
-        const getTopBidsDataUrl = `/api/comments/?end_count=4&product_id=${id}`;
+        const getTopBidsDataUrl = `/api/comments/?end_count=5&product_id=${id}`;
         const showMoreButton = document.querySelector('.show-more');
+
         //Делаем гет запрос на сервер чтобы отрендерить первые 4 ставки
         getQuery(getTopBidsDataUrl)
         .then(response => {
@@ -18,29 +19,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         })
         .then(data => {
-            if(data.length == 0) {
+            if(data.length === 0) {
                 createBidsWarning()
             } else {
                 //Полученый ответ обрабатываем и разделяем на два шаблона
-                data.forEach((object, index) => {
-                    if (index % 2 == 0) {
-                        bidTemplate(object.pic, object.name, object.price, object.text, 1)
-                    } else {
-                        bidTemplate(object.pic, object.name, object.price, object.text, 2)
-                    }
-                })
+                data.length > 4 ? showMoreButton.style.display = 'block' : checkRender(data)
             }
-
         })
         .catch(error => {
             console.log(error);
         })
-        .finally(() => {
-            const bidItems = document.querySelectorAll('.bid');
-            if (bidItems.length == 4) {
-                showMoreButton.style.display = 'block'
-            }
-        });
+
+
         //Логика модального окна - открывание и закрывание
         const doBidButton = document.querySelector('.dobid');
         const modalWrapper = document.querySelector('.modal-wrapper');
@@ -66,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         modalInput.addEventListener('change', () => {
             if (modalInput.files.length > 0) {
-                const file = modalInput.files[0];
+                const file = modalInput.files[modalInput.files.length];
                 const url = URL.createObjectURL(file);
                 addTextModal.textContent = '';
                 addTextModal.style.cssText = 'top: -290px';
@@ -90,21 +80,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             })
             .then(data => {
-                if (data.length == 0) {
-                    showMoreButton.textContent = "No more bids";
-                    setTimeout(() => {
-                        showMoreButton.style.display = 'none';
-                    }, 2000)
-                } else {
-                    data.forEach((object, index) => {
-                        if (index % 2 == 0) {
-                            bidTemplate(object.pic, object.name, object.price, object.text, 1)
-                        } else {
-                            bidTemplate(object.pic, object.name, object.price, object.text, 2)
-                        }
-                        showMoreButton.style.display = 'none';
-                    })
-                }
+                data.forEach((object, index) => {
+                    if (index % 2 == 0) {
+                        bidTemplate(object.pic, object.name, object.price, object.text, 1)
+                    } else {
+                        bidTemplate(object.pic, object.name, object.price, object.text, 2)
+                    }
+                })
 
             })
             .catch(error => {
@@ -112,7 +94,8 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .finally(() => {
                 console.log('Already load.');
-                
+                showMoreButton.style.display = 'none';
+
             })
         })
     }
@@ -131,8 +114,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Тут тоже делаем так, чтобы загруженное фото отображалось в поле ввода и убирался текст
         fileInput.addEventListener('change', () => {
-            if (fileInput.files.length > 0) {
-                const file = fileInput.files[0];
+            const filesArr = fileInput.files.length
+            if (filesArr > 0) {
+                const file = fileInput.files[filesArr];
                 const url = URL.createObjectURL(file);
                 addText.textContent = '';
                 addText.style.cssText = 'top: -290px';
@@ -153,7 +137,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //Функции
 
-
+    
+    //Фунция преобразования массива данных и рендерингда его на стринце
+    function checkRender(data) {
+        const filteredArray = data.slice(0, 4)
+        filteredArray.forEach((object, index) => {
+            if (index % 2 == 0) {
+                bidTemplate(object.pic, object.name, object.price, object.text, 1)
+            } else {
+                bidTemplate(object.pic, object.name, object.price, object.text, 2)
+            }
+        })
+    }
     //Гет запрос
     async function getQuery(url) {
         let result = await fetch(url, {
