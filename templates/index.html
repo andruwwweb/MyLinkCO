@@ -27,7 +27,7 @@
                 <p>Comment</p>
                 <input type="text" placeholder="Optional" name="newProductDescription" id="newProductDescription">
                 <div class="price-box-2">
-                    <input type="number" placeholder="0" min="0" required name="newPrice">
+                    <input type="number" placeholder="0" required name="newPrice">
                     <div class="arrow"></div>
                     <select name="newPriceValue" id="newPriceValue">
                         <option value="USD" selected>$ USD</option>
@@ -50,6 +50,7 @@
             </form>
         </header>
         <main class="main">
+            <div class="trading-end">Trading will be closed on <span></span></div>
             <div class="product-image-box">
                 <img src="/{{ product.image }}" alt="image_product">
             </div>

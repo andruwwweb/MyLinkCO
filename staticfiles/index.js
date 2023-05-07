@@ -56,7 +56,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         modalInput.addEventListener('change', () => {
             if (modalInput.files.length > 0) {
-                const file = modalInput.files[modalInput.files.length];
+                const lastFile = +modalInput.files.length - 1
+                const file = modalInput.files[lastFile];
                 const url = URL.createObjectURL(file);
                 addTextModal.textContent = '';
                 addTextModal.style.cssText = 'top: -290px';
@@ -98,6 +99,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
             })
         })
+        //Создаем значение минимальной ставки
+        const priceInput = document.querySelector('.price-box-2 input')
+        const prices  = document.querySelectorAll('.user-bid')
+        const minPrice = document.querySelector('.min-price')
+
+        if (prices.length > 0) {
+            let bidsArr = []
+            prices.forEach(item => {
+                bidsArr.push(item.match(/\d+/g))
+            })
+            const maxBid = Math.max(...bidsArr)
+
+            priceInput.min = +maxBid
+        } else {
+            priceInput.min = +minPrice.textContent.match(/\d+/g)
+        }
     }
 
     //Страница добавления продукта
@@ -114,9 +131,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Тут тоже делаем так, чтобы загруженное фото отображалось в поле ввода и убирался текст
         fileInput.addEventListener('change', () => {
-            const filesArr = fileInput.files.length
-            if (filesArr > 0) {
-                const file = fileInput.files[filesArr];
+            if (fileInput.files.length > 0) {
+                const lastFile = +fileInput.files.length-1
+                const file = fileInput.files[lastFile];
                 const url = URL.createObjectURL(file);
                 addText.textContent = '';
                 addText.style.cssText = 'top: -290px';

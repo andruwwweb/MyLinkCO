@@ -55,14 +55,8 @@ body .container .main {
 }
 body .container .main .trading-end {
   margin: 20px;
-  font-size: 24px;
+  font-size: 18px;
   line-height: 26px;
-  font-weight: 600;
-}
-body .container .main .trading-end span {
-  font-size: 24px;
-  line-height: 26px;
-  font-weight: 600;
 }
 body .container .main .show-more {
   padding: 12px 35px;
@@ -854,4 +848,4 @@ body .container .footer .support-tinkoff {
   color: #151212;
 }
 
-/*# sourceMappingURL=main.css.map */
+/*# sourceMappingURL=styles.main.css.map */
