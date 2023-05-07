@@ -799,16 +799,7 @@ body .container .footer .support-tinkoff {
 .modal .modal-form .price-box-2 input::placeholder {
   font-size: 22px;
 }
-.modal .modal-form .price-box-2 .arrow {
-  position: absolute;
-  right: 3px;
-  top: 12px;
-  height: 30px;
-  width: 20px;
-  background: white;
-  z-index: 10;
-}
-.modal .modal-form .price-box-2 select {
+.modal .modal-form .price-box-2 .currency {
   padding: 15px 5px;
   width: 95px;
   display: block;
@@ -821,7 +812,9 @@ body .container .footer .support-tinkoff {
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
   outline: none;
+  text-align: center;
   border: 2px solid #151212;
+  background: white;
 }
 .modal .modal-form button {
   margin-top: 20px;
@@ -849,12 +842,15 @@ body .container .footer .support-tinkoff {
   overflow: hidden;
 }
 .trade-closed .container h1 {
+  margin-top: 30px;
   text-align: center;
   font-size: 26px;
   line-height: 28px;
   font-weight: 600;
 }
 .trade-closed .container p {
+  margin-top: 16px;
+  text-align: center;
   font-size: 18px;
   line-height: 24px;
   font-weight: 400;

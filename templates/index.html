@@ -28,12 +28,9 @@
                 <input type="text" placeholder="Optional" name="newProductDescription" id="newProductDescription">
                 <div class="price-box-2">
                     <input type="number" placeholder="0" required name="newPrice">
-                    <div class="arrow"></div>
-                    <select name="newPriceValue" id="newPriceValue">
-                        <option value="USD" selected>$ USD</option>
-                        <option value="EUR">€ EUR</option>
-                        <option value="RUB">₽ RUB</option>
-                    </select>
+                <div class="currency">
+                    /{{ СЮДА }}
+                </div>
                 </div>
                 <button type="submit">done</button>
             </form>
@@ -50,7 +47,7 @@
             </form>
         </header>
         <main class="main">
-            <div class="trading-end">Trading will be closed on <span></span></div>
+            <div class="trading-end">Trading will be closed on </div>
             <div class="product-image-box">
                 <img src="/{{ product.image }}" alt="image_product">
             </div>
