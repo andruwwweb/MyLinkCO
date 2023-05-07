@@ -841,6 +841,30 @@ body .container .footer .support-tinkoff {
   transition: all 0.3s ease-in-out;
 }
 
+.trade-closed .container {
+  min-width: 320px;
+  max-width: 576px;
+  margin: 0 auto;
+  background: #CBC8EC;
+  overflow: hidden;
+}
+.trade-closed .container h1 {
+  text-align: center;
+  font-size: 26px;
+  line-height: 28px;
+  font-weight: 600;
+}
+.trade-closed .container p {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 400;
+}
+.trade-closed .container p span {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
 .response-wrapper {
   padding: 16px 24px;
   width: fit-content;
