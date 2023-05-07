@@ -29,7 +29,7 @@
                 <div class="price-box-2">
                     <input type="number" placeholder="0" required name="newPrice">
                 <div class="currency">
-                    /{{ СЮДА }}
+                    {{ product.value }}
                 </div>
                 </div>
                 <button type="submit">done</button>
@@ -47,7 +47,7 @@
             </form>
         </header>
         <main class="main">
-            <div class="trading-end">Trading will be closed on </div>
+            <div class="trading-end">Trading will be closed on: {{ product.closed_at }} (by time in San Francisco)</div>
             <div class="product-image-box">
                 <img src="/{{ product.image }}" alt="image_product">
             </div>

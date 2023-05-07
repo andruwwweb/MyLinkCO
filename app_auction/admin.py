@@ -4,8 +4,8 @@ from app_auction.models import Product, Comment
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['title', 'created_at', 'author']
-    fields = ['text', 'image']
+    list_display = ['title', 'created_at', 'author', 'min_price']
+    fields = ['title', 'text', 'image', 'min_price']
     list_filter = ['created_at']
 
 
