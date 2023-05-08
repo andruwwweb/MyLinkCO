@@ -22,8 +22,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if(data.length === 0) {
                 createBidsWarning()
             } else {
-                //Полученый ответ обрабатываем и разделяем на два шаблона
-                data.length > 4 ? showMoreButton.style.display = 'block' : checkRender(data)
+                const filteredArray = data.slice(0, 4)
+                filteredArray.forEach((object, index) => {
+                    if (index % 2 == 0) {
+                    bidTemplate(object.pic, object.name, object.price, object.text, 1)
+                    } else {
+                    bidTemplate(object.pic, object.name, object.price, object.text, 2)
+                    }
+                })
             }
         })
         .catch(error => {
@@ -154,18 +160,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //Функции
 
-    
-    //Фунция преобразования массива данных и рендерингда его на стринце
-    function checkRender(data) {
-        const filteredArray = data.slice(0, 4)
-        filteredArray.forEach((object, index) => {
-            if (index % 2 == 0) {
-                bidTemplate(object.pic, object.name, object.price, object.text, 1)
-            } else {
-                bidTemplate(object.pic, object.name, object.price, object.text, 2)
-            }
-        })
-    }
     //Гет запрос
     async function getQuery(url) {
         let result = await fetch(url, {
