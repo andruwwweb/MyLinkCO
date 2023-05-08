@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,14 +8,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/staticfiles/styles/main.css">
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
     <title>MyLinkCO</title>
 </head>
 <body class="trade-closed">
     <div class="container">
-        <h1>Trading is closed</h1>
-        <p>Maximal bid owner: <span>Сюда вставляй имя того кто сделал максимальную ставку</span></p>
-        <p>Maximal bid: <span> а сюда саму ставку</span></p>
+        <h1>Auction end</h1>
     </div>
 </body>
 </html>

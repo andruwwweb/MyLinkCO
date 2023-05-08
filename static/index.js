@@ -1,44 +1,85 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    //Выгрузка первых четырех ставок
-    getQuery('Сюда вставляй урл для запроса первых 4 ставок')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(response.status)
-        } else {
-            return response.json()
-        }
-    })
-    .then(data => {
-        data.forEach((object, index) => {
-            if (index % 2 == 0) {
+    //Главная страница
+    const mainBody = document.querySelector('.main-body');
+    if (mainBody) {
+        //Берем айдишник продукта из блока и вставляем его в ссылку
+        const uuidWrapper = document.querySelector('.ID');
+        const id = uuidWrapper.innerText;
+        const getTopBidsDataUrl = `/api/comments/?end_count=5&product_id=${id}`;
+        const showMoreButton = document.querySelector('.show-more');
 
+        //Делаем гет запрос на сервер чтобы отрендерить первые 4 ставки
+        getQuery(getTopBidsDataUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status)
+            } else {
+                return response.json()
             }
         })
-    })
-    //Спецэффекты кнопок
-    const headerButton = document.querySelector('.header-button');
-    if (headerButton) {
-        headerButton.addEventListener('click', () => {
-            headerButton.classList.toggle('header-button-active');
+        .then(data => {
+            if(data.length === 0) {
+                createBidsWarning()
+            } else {
+                const filteredArray = data.slice(0, 4)
+                filteredArray.forEach((object, index) => {
+                    if (index % 2 == 0) {
+                    bidTemplate(object.pic, object.name, object.price, object.text, 1)
+                    } else {
+                    bidTemplate(object.pic, object.name, object.price, object.text, 2)
+                    }
+                })
+                showMoreButton.style.display = 'block';
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        })
+
+
+        //Логика модального окна - открывание и закрывание
+        const doBidButton = document.querySelector('.dobid');
+        const modalWrapper = document.querySelector('.modal-wrapper');
+        const modal = document.querySelector('.modal')
+        if (doBidButton) {
+            doBidButton.addEventListener('click', () => {
+                modalWrapper.style.cssText = 'display: block';
+                mainBody.style.cssText = 'overflow: hidden;'
+            });
+        };
+        modalWrapper.addEventListener('click', (e) => {
+            const target = e.target
+            if (!modal.contains(target) || target.classList.contains('modal-img')) {
+                modalWrapper.style.cssText = 'display: none;'
+                mainBody.style.cssText = 'overflow: auto;'
+            }
+        })
+
+        // Тут мы делаем так, чтобы загруженное фото отображалось в поле ввода и убирался текст 
+        const modalInput = document.querySelector('#modalImage');
+        const modalLabel = document.querySelector('label[for="modalImage"]');
+        const addTextModal = document.querySelector('.add-text-modal');
+
+        modalInput.addEventListener('change', () => {
+            if (modalInput.files.length > 0) {
+                const lastFile = +modalInput.files.length - 1
+                const file = modalInput.files[lastFile];
+                const url = URL.createObjectURL(file);
+                addTextModal.textContent = '';
+                addTextModal.style.cssText = 'top: -290px';
+                modalLabel.style.cssText = `background: url(${url}); background-repeat: no-repeat; background-size: cover; background-position: center;`;
+            } else {
+                modalInput.textContent = 'Loading...';
+                modalInput.style.cssText = 'top: -290px';
+                addLabel.style.cssText = "background: none;";
+            }
         });
-    };
-    const doBidButton = document.querySelector('.dobid');
-    if (doBidButton) {
-        doBidButton.addEventListener('click', () => {
-            doBidButton.classList.toggle('dobid-active');
-        });
-    };
 
-    const modalForm = document.querySelector('.modal-form');
-    const modalLabel = document.querySelector('label[for="modalImage"]');
-    const addTextModal = document.querySelector('.add-text-modal')
-    const showMoreButton = document.querySelector('.show-more');
-
-
-    if (showMoreButton) {
+        //Запрос на создание всех остальных ставок - также рендерим и потом убираем кнопку показать еще
+        const getLastBidsDataUrl = `/api/comments/?start_count=5&product_id=${id}`
         showMoreButton.addEventListener('click', () => {
-            postQuery()
+            getQuery(getLastBidsDataUrl)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(response.status)
@@ -47,30 +88,58 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             })
             .then(data => {
-                console.log(data)
+                data.forEach((object, index) => {
+                    if (index % 2 == 0) {
+                        bidTemplate(object.pic, object.name, object.price, object.text, 1)
+                    } else {
+                        bidTemplate(object.pic, object.name, object.price, object.text, 2)
+                    }
+                })
+
             })
             .catch(error => {
                 console.log(error)
             })
             .finally(() => {
+                console.log('Already load.');
                 showMoreButton.style.display = 'none';
             })
         })
+        //Создаем значение минимальной ставки
+        const priceInput = document.querySelector('.price-box-2 input')
+        const prices  = document.querySelectorAll('.user-bid')
+        const minPrice = document.querySelector('.min-price')
+
+        if (prices.length > 0) {
+            let bidsArr = []
+            prices.forEach(item => {
+                bidsArr.push(item.match(/\d+/g))
+            })
+            const maxBid = Math.max(...bidsArr)
+
+            priceInput.min = +maxBid
+        } else {
+            priceInput.min = +minPrice.textContent.match(/\d+/g)
+        }
     }
 
-    //Форма на странице добавления продукта
-    const addFrom = document.querySelector('.add-form')
-    if (addFrom) {
+    //Страница добавления продукта
+    const addBody = document.querySelector('.add-body')
+    if (addBody) {
+        const addFrom = document.querySelector('.add-form')
         const addText = document.querySelector('.add-text');
         const fileInput = document.querySelector('#imageFile');
         const addLabel = document.querySelector('.addLabel');
 
+        //Задаем ширину лейбла 
         const addFromWidth = addFrom.offsetWidth;
         addLabel.style.width = `${addFromWidth}px`;
 
+        // Тут тоже делаем так, чтобы загруженное фото отображалось в поле ввода и убирался текст
         fileInput.addEventListener('change', () => {
             if (fileInput.files.length > 0) {
-                const file = fileInput.files[0];
+                const lastFile = +fileInput.files.length-1
+                const file = fileInput.files[lastFile];
                 const url = URL.createObjectURL(file);
                 addText.textContent = '';
                 addText.style.cssText = 'top: -290px';
@@ -81,30 +150,77 @@ document.addEventListener('DOMContentLoaded', () => {
                 addLabel.style.cssText = "background: none;";
             }
         });
-
-    }
-
-
-    function renderServerResponse(response) {
-        const statusModal = document.createElement('div');
-        statusModal.style.cssText = 'width: 100%; height: 100%; display: flex; position: absolute; top: 0; right: 0; justify-content: center; align-items: center';
-        statusModal.innerHTML = `<div class="response-wrapper">${response}</div>`
     };
-    async function postQuery(url, data) {
-        let res = await fetch(url, {
-            method: "POST",
-            headers: {"Content-type": "application/json"},
-            body: data
-        })
-        return res
-    };
+
+
+
+
+
+
+
+    //Функции
+
+    //Гет запрос
     async function getQuery(url) {
         let result = await fetch(url, {
             method: "GET"
         });
         return result;
     };
-    
+    //Создание шаблона
+    function bidTemplate(userImage, userName, userBid, userMessage, templateNumber) {
+        if (!userImage) {
+            let imagePlaceHolder = userName.substring(1, 3).toUpperCase()
+            userImage = imagePlaceHolder
+        }
+        const bids = document.querySelector('.bids')
+        const template = document.createElement('div');
+        template.classList.add(`bid-container-${templateNumber}`, 'bid');
+        if (!userImage) {
+            const imagePlaceHolder = userName.substring(1, 3).toUpperCase()
+            template.innerHTML = `
+            <div class="bid-template-${templateNumber}">
+                <div class="user-box-${templateNumber}">
+                    <div class="box-${templateNumber}">
+                        <div class="user-image">
+                            <span>${imagePlaceHolder}</span>
+                        </div>
+                        <div class="user-name-${templateNumber}">${userName}</div>
+                    </div>
+                    <div class="user-bid">${userBid}</div>
+                </div>
+                <div class="user-message-${templateNumber}">${userMessage}</div>
+            </div>
+            `;
+        } else {
+            template.innerHTML = `
+            <div class="bid-template-${templateNumber}">
+                <div class="user-box-${templateNumber}">
+                    <div class="box-${templateNumber}">
+                        <div class="user-image">
+                            <img class="image-${templateNumber}" src="${userImage}" alt="image_comment">
+                        </div>
+                        <div class="user-name-${templateNumber}">${userName}</div>
+                    </div>
+                    <div class="user-bid">${userBid}</div>
+                </div>
+                <div class="user-message-${templateNumber}">${userMessage}</div>
+            </div>
+            `;
+        }
+        bids.append(template);
+    };
+
+    //Создание окна если нет ставок
+    function createBidsWarning() {
+        const bidsContainer = document.querySelector('.bids')
+        const warningText = document.createElement('div');
+        warningText.classList.add('warning-text')
+        warningText.textContent = 'Here is no bids yet, be the first!';
+        if (bidsContainer) {
+            bidsContainer.append(warningText);
+        }
+    };
 })
 
 

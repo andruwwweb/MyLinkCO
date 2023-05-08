@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,14 +8,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/staticfiles/styles/main.css">
+    <link rel="stylesheet" href="{% static "styles/main.css" %}">
     <title>MyLinkCO</title>
 </head>
 <body class="main-body">
     <div class="modal-wrapper">
         <div class="modal">
             <div class="modal-logo">
-                <img class="modal-img" src="../staticfiles/images/logo2.svg" alt="">
+                <img class="modal-img" src="{% static "images/logo2.svg" %}" alt="">
             </div>
             <form class="modal-form" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -40,20 +41,30 @@
         <div class="ID" hidden>{{ product.uuid }}</div>
         <header class="header">
             <div class="header-logo">
-                <img src="/staticfiles/images/logo.svg">
+                <img src="{% static 'images/logo.svg' %}">
             </div>
             <form action="/product/new/">
                 <button class="header-button">Add a product</button>
             </form>
         </header>
         <main class="main">
-            <div class="trading-end">Trading will be closed on: {{ product.closed_at }} (by time in San Francisco)</div>
+            {% if is_closed %}
+                <h1>Trading is closed</h1>
+                    {% if product.comments.exists %}
+                        <p>Maximal bid owner: <span>{{ product.comments.last.name }}</span></p>
+                        <p>Maximal bid: <span>{{ product.comments.last.price }}</span></p>
+                    {% else %}
+                        <p>There were no bids</p>
+                    {% endif %}
+            {% else %}
+                <div class="trading-end">Trading will be closed on: {{ product.closed_at }} (by time in San Francisco)</div>
+            {% endif %}
             <div class="product-image-box">
-                <img src="/{{ product.image }}" alt="image_product">
+                <img src="/photos/{{product.image}}" alt="image_product">
             </div>
             <div class="product-name">{{ product.title }}</div>
             <div class="copy-button">
-                <img src="/staticfiles/images/copylink.svg">
+                <img src="{% static 'images/copylink.svg' %}">
             </div>
             <div class="product-sale">
                 <div class="sailer-name">Seller: {{ product.author }}</div>
@@ -62,7 +73,9 @@
             <div class="product-description">
                 {{ product.text }}
             </div>
-            <div class="dobid">do bid</div>
+            {% if not is_closed %}
+                <div class="dobid">do bid</div>
+            {% endif %}
             <div class="bids-head">bids</div>
 
             <div class="bids"></div>
@@ -72,11 +85,11 @@
         <footer class="footer">
             <div class="contact-head">Contact us</div>
             <div class="contacts-mail">
-                <img src="/staticfiles/images/mail-icon.svg">
+                <img src="{% static 'images/mail-icon.svg' %}">
                 <a>mylinkco.contact@gmail.com</a>
             </div>
             <div class="contacts-inst">
-                <img src="/staticfiles/images/inst-icon.svg">
+                <img src="{% static 'images/inst-icon.svg' %}">
                 <a>@my.linkco</a>
             </div>
             <div class="support-head">Support our project</div>
@@ -84,6 +97,6 @@
             <div class="support-tinkoff">Tinkoff:</div>
         </footer>
     </div>
-    <script src="/staticfiles/index.js"></script>
+    <script src="{% static 'index.js' %}"></script>
 </body>
 </html>

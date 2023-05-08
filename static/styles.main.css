@@ -55,14 +55,8 @@ body .container .main {
 }
 body .container .main .trading-end {
   margin: 20px;
-  font-size: 24px;
+  font-size: 18px;
   line-height: 26px;
-  font-weight: 600;
-}
-body .container .main .trading-end span {
-  font-size: 24px;
-  line-height: 26px;
-  font-weight: 600;
 }
 body .container .main .show-more {
   padding: 12px 35px;
@@ -799,7 +793,16 @@ body .container .footer .support-tinkoff {
 .modal .modal-form .price-box-2 input::placeholder {
   font-size: 22px;
 }
-.modal .modal-form .price-box-2 .currency {
+.modal .modal-form .price-box-2 .arrow {
+  position: absolute;
+  right: 3px;
+  top: 12px;
+  height: 30px;
+  width: 20px;
+  background: white;
+  z-index: 10;
+}
+.modal .modal-form .price-box-2 select {
   padding: 15px 5px;
   width: 95px;
   display: block;
@@ -812,9 +815,7 @@ body .container .footer .support-tinkoff {
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
   outline: none;
-  text-align: center;
   border: 2px solid #151212;
-  background: white;
 }
 .modal .modal-form button {
   margin-top: 20px;
@@ -834,33 +835,6 @@ body .container .footer .support-tinkoff {
   transition: all 0.3s ease-in-out;
 }
 
-.trade-closed .container {
-  min-width: 320px;
-  max-width: 576px;
-  margin: 0 auto;
-  background: #CBC8EC;
-  overflow: hidden;
-}
-.trade-closed .container h1 {
-  margin-top: 30px;
-  text-align: center;
-  font-size: 26px;
-  line-height: 28px;
-  font-weight: 600;
-}
-.trade-closed .container p {
-  margin-top: 16px;
-  text-align: center;
-  font-size: 18px;
-  line-height: 24px;
-  font-weight: 400;
-}
-.trade-closed .container p span {
-  font-size: 18px;
-  line-height: 24px;
-  font-weight: 400;
-}
-
 .response-wrapper {
   padding: 16px 24px;
   width: fit-content;
@@ -874,4 +848,4 @@ body .container .footer .support-tinkoff {
   color: #151212;
 }
 
-/*# sourceMappingURL=main.css.map */
+/*# sourceMappingURL=styles.main.css.map */
