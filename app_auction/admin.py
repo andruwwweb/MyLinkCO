@@ -1,12 +1,17 @@
 from django.contrib import admin
 
-from app_auction.models import Product, Comment
+from app_auction.models import Product, Comment, IsDeletedProduct
 
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['title', 'created_at', 'author', 'min_price']
     fields = ['title', 'text', 'image', 'min_price']
     list_filter = ['created_at']
+
+
+class DeletedProductAdmin(admin.ModelAdmin):
+    list_display = ['uuid', ]
+    fields = ['uuid', ]
 
 
 class CommentAdmin(admin.ModelAdmin):
@@ -16,4 +21,5 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Product, ProductAdmin)
+admin.site.register(IsDeletedProduct, DeletedProductAdmin)
 admin.site.register(Comment, CommentAdmin)

@@ -1,8 +1,16 @@
 from django.core.files.base import ContentFile
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView, DetailView
+from django.utils import timezone
 
-from app_auction.models import Product, Comment
+from app_auction.models import Product, Comment, IsDeletedProduct
+
+
+def page_not_found_view(request, exception):
+    uuid = request.get_full_path().replace('/', '')
+    if IsDeletedProduct.objects.filter(uuid=uuid).exists():
+        return render(request, 'product_was_deleted.html', {})
+    return redirect('product_create')
 
 
 class ProductCreateView(TemplateView):
@@ -45,6 +53,15 @@ class ProductDetailView(DetailView):
     def get(self, request, *args, **kwargs):
         context = {}
         product = self.get_object()
+        if product.deleted_at < timezone.localtime():
+            IsDeletedProduct.objects.create(
+                uuid=product.uuid
+            )
+            product.delete()
+            self.template_name = 'product_was_deleted.html'
+            return render(request, self.template_name, context)
+        elif product.closed_at < timezone.localtime():
+            context['is_closed'] = True
         context['product'] = product
         return render(request, self.template_name, context)
 

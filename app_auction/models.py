@@ -1,12 +1,9 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 
-import pytz
 from django.db import models
 import uuid
 
 from django.utils import timezone
-
-from my_link_co.settings import TIME_ZONE
 
 
 def get_closed_date():
@@ -31,7 +28,7 @@ class Product(models.Model):
     deleted_at = models.DateTimeField(default=get_deleted_date)
     min_price = models.CharField(max_length=255, verbose_name='Минимальная ставка')
     value = models.CharField(max_length=255, default='$', verbose_name='Валюта')
-    image = models.ImageField(upload_to='photos/products/', blank=False, verbose_name='Фото')
+    image = models.ImageField(upload_to='products/', blank=False, verbose_name='Фото')
     author = models.CharField(max_length=1000, verbose_name='Никнейм пользователя')
 
     def __str__(self):
@@ -42,11 +39,22 @@ class Product(models.Model):
         verbose_name_plural = 'Товары'
 
 
+class IsDeletedProduct(models.Model):
+    """
+    Модель удалённого товара
+    """
+    uuid = models.CharField(max_length=255, default='', verbose_name='uuid-string')
+
+    class Meta:
+        verbose_name = 'Удалённый товар'
+        verbose_name_plural = 'Удалённые товары'
+
+
 class Comment(models.Model):
     name = models.CharField(max_length=100, verbose_name='Никнейм')
     text = models.CharField(max_length=1000, verbose_name='Текст')
     price = models.CharField(max_length=255, verbose_name='Ставка')
-    pic = models.ImageField(upload_to='photos/users/', blank=True, verbose_name='Фото', null=True)
+    pic = models.ImageField(upload_to='users/', blank=True, verbose_name='Фото', null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='comments', verbose_name='Продукт')
     created_at = models.DateTimeField(auto_now_add=True)
 
