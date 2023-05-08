@@ -1,5 +1,22 @@
+from datetime import datetime, timedelta
+
+import pytz
 from django.db import models
 import uuid
+
+from django.utils import timezone
+
+from my_link_co.settings import TIME_ZONE
+
+
+def get_closed_date():
+    closed_date = timezone.localtime() + timedelta(days=3)
+    return closed_date
+
+
+def get_deleted_date():
+    deleted_date = timezone.localtime() + timedelta(days=6)
+    return deleted_date
 
 
 class Product(models.Model):
@@ -10,7 +27,10 @@ class Product(models.Model):
     title = models.CharField(max_length=1000, verbose_name='Название товара')
     text = models.TextField(max_length=10000, default='', verbose_name='Описание товара')
     created_at = models.DateTimeField(auto_now_add=True)
+    closed_at = models.DateTimeField(default=get_closed_date)
+    deleted_at = models.DateTimeField(default=get_deleted_date)
     min_price = models.CharField(max_length=255, verbose_name='Минимальная ставка')
+    value = models.CharField(max_length=255, default='$', verbose_name='Валюта')
     image = models.ImageField(upload_to='photos/products/', blank=False, verbose_name='Фото')
     author = models.CharField(max_length=1000, verbose_name='Никнейм пользователя')
 

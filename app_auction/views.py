@@ -1,5 +1,5 @@
 from django.core.files.base import ContentFile
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.views.generic import TemplateView, DetailView
 
 from app_auction.models import Product, Comment
@@ -26,6 +26,7 @@ class ProductCreateView(TemplateView):
             title=request.POST.get('productName'),
             text=request.POST.get('productDescription'),
             min_price=min_price,
+            value=currencies[request.POST.get("priceValue")]
         )
         for f in request.FILES.getlist('imageFile'):
             data = f.read()
@@ -40,19 +41,19 @@ class ProductDetailView(DetailView):
     """
     model = Product
     template_name = 'index.html'
-    context_object_name = 'product'
+
+    def get(self, request, *args, **kwargs):
+        context = {}
+        product = self.get_object()
+        context['product'] = product
+        return render(request, self.template_name, context)
 
     def post(self, request, pk):
-        currencies = {
-            "USD": "$",
-            "EUR": "€",
-            "RUB": "₽",
-        }
-        price = f'{currencies[request.POST.get("newPriceValue")]}{request.POST.get("newPrice")}'
         name = request.POST.get('newUserName')
         if not name.startswith('@'):
             name = f'@{name}'
         product = self.get_object()
+        price = f'{product.value}{request.POST.get("newPrice")}'
         comment = Comment.objects.create(
             name=name,
             text=request.POST.get('newProductDescription'),
