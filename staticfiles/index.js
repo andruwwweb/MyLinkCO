@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     bidTemplate(object.pic, object.name, object.price, object.text, 2)
                     }
                 })
+                showMoreButton.style.display = 'block';
             }
         })
         .catch(error => {
@@ -75,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        //Запрос на создание всех остальных транзакций - также рендерим и потом убираем кнопку показать еще
+        //Запрос на создание всех остальных ставок - также рендерим и потом убираем кнопку показать еще
         const getLastBidsDataUrl = `/api/comments/?start_count=5&product_id=${id}`
         showMoreButton.addEventListener('click', () => {
             getQuery(getLastBidsDataUrl)
@@ -102,7 +103,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .finally(() => {
                 console.log('Already load.');
                 showMoreButton.style.display = 'none';
-
             })
         })
         //Создаем значение минимальной ставки
