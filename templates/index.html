@@ -8,36 +8,39 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static "styles/main.css" %}">
+    <!-- <link rel="stylesheet" href="{% static "styles/main.css" %}"> -->
+    <link rel="stylesheet" href="../static/styles/main.css">
     <title>MyLinkCO</title>
 </head>
 <body class="main-body">
-    <div class="modal-wrapper">
-        <div class="modal">
-            <div class="modal-logo">
-                <img class="modal-img" src="{% static "images/logo2.svg" %}" alt="">
-            </div>
-            <form class="modal-form" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="add-text-modal">Add a photo</div>
-                <label for="modalImage">
-                    <input type="file" name="modalImage" id="modalImage">
-                </label>
-                <p>Nickname</p>
-                <input type="text" placeholder="@instagram, Telegram" required id="newUserName" name="newUserName">
-                <p>Comment</p>
-                <input type="text" placeholder="Optional" name="newProductDescription" id="newProductDescription">
-                <div class="price-box-2">
-                    <input type="number" placeholder="0" required name="newPrice">
-                <div class="currency">
-                    {{ product.value }}
-                </div>
-                </div>
-                <button type="submit">done</button>
-            </form>
-        </div>
-    </div>
     <div class="container">
+
+        <div class="modal-wrapper">
+            <div class="modal">
+                <div class="modal-logo">
+                    <img class="modal-img" src="{% static "images/logo2.svg" %}" alt="">
+                </div>
+                <form class="modal-form" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="add-text-modal">Add a photo</div>
+                    <label for="modalImage">
+                        <input type="file" name="modalImage" id="modalImage">
+                    </label>
+                    <p>Nickname</p>
+                    <input type="text" placeholder="@instagram, Telegram" required id="newUserName" name="newUserName">
+                    <p>Comment</p>
+                    <input type="text" placeholder="Optional" name="newProductDescription" id="newProductDescription">
+                    <div class="price-box-2">
+                        <input type="number" placeholder="0" required name="newPrice">
+                    <div class="currency">
+                        {{ product.value }}
+                    </div>
+                    </div>
+                    <button type="submit">done</button>
+                </form>
+            </div>
+        </div>
+
         <div class="ID" hidden>{{ product.uuid }}</div>
         <header class="header">
             <div class="header-logo">
@@ -97,6 +100,7 @@
             <div class="support-tinkoff">Tinkoff:</div>
         </footer>
     </div>
-    <script src="{% static 'index.js' %}"></script>
+    <!-- <script src="{% static 'index.js' %}"></script> -->
+    <script src="../static/index.js"></script>
 </body>
 </html>

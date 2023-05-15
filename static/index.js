@@ -22,9 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if(data.length === 0) {
                 createBidsWarning()
             } else {
-                const filteredArray = data.slice(0, 4)
+                const filteredArray = data.filter((item, index) => {return item[index] < 5})
+                
                 filteredArray.forEach((object, index) => {
-                    if (index % 2 == 0) {
+                    if (index % 2 === 0) {
                     bidTemplate(object.pic, object.name, object.price, object.text, 1)
                     } else {
                     bidTemplate(object.pic, object.name, object.price, object.text, 2)
@@ -176,14 +177,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const bids = document.querySelector('.bids')
         const template = document.createElement('div');
         template.classList.add(`bid-container-${templateNumber}`, 'bid');
-        if (!userImage) {
+        if (userImage === null || userImage === undefined || userImage === '') {
             const imagePlaceHolder = userName.substring(1, 3).toUpperCase()
             template.innerHTML = `
             <div class="bid-template-${templateNumber}">
                 <div class="user-box-${templateNumber}">
                     <div class="box-${templateNumber}">
                         <div class="user-image">
-                            <span>${imagePlaceHolder}</span>
+                            <span style="margin: auto;">${imagePlaceHolder}</span>
                         </div>
                         <div class="user-name-${templateNumber}">${userName}</div>
                     </div>
@@ -198,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="user-box-${templateNumber}">
                     <div class="box-${templateNumber}">
                         <div class="user-image">
-                            <img class="image-${templateNumber}" src="${userImage}" alt="image_comment">
+                            <img class="image-${templateNumber}" src="${userImage}" alt="User photo">
                         </div>
                         <div class="user-name-${templateNumber}">${userName}</div>
                     </div>

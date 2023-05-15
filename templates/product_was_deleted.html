@@ -8,11 +8,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'styles/main.css' %}"> -->
+    <link rel="stylesheet" href="../styles/main.css">
     <title>MyLinkCO</title>
 </head>
 <body class="trade-closed">
     <div class="container">
+        <header class="header">
+            <div class="header-logo">
+                <!-- <img src="{% static 'images/logo.svg' %}"> -->
+                <img src="../static/images/logo.svg" alt="">
+            </div>
+            <form action="/product/new/">
+                <button class="header-button">Add a product</button>
+            </form>
+        </header>
         <h1>Auction end</h1>
     </div>
 </body>
