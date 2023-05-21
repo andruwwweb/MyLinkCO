@@ -27,6 +27,7 @@ class Product(models.Model):
     closed_at = models.DateTimeField(default=get_closed_date)
     deleted_at = models.DateTimeField(default=get_deleted_date)
     min_price = models.CharField(max_length=255, verbose_name='Минимальная ставка')
+    start_price = models.CharField(max_length=255, verbose_name='Стартовая цена')
     value = models.CharField(max_length=255, default='$', verbose_name='Валюта')
     image = models.ImageField(upload_to='products/', blank=False, verbose_name='Фото')
     author = models.CharField(max_length=1000, verbose_name='Никнейм пользователя')

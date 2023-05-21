@@ -1,3 +1,5 @@
+import re
+
 from django.core.files.base import ContentFile
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView, DetailView
@@ -25,7 +27,7 @@ class ProductCreateView(TemplateView):
             "EUR": "€",
             "RUB": "₽",
         }
-        min_price = f'{currencies[request.POST.get("priceValue")]}{request.POST.get("minimalPrice")}'
+        start_price = f'{currencies[request.POST.get("priceValue")]}{request.POST.get("minimalPrice")}'
         author = request.POST.get('userName')
         if not author.startswith('@'):
             author = f'@{author}'
@@ -33,7 +35,8 @@ class ProductCreateView(TemplateView):
             author=author,
             title=request.POST.get('productName'),
             text=request.POST.get('productDescription'),
-            min_price=min_price,
+            min_price=start_price,
+            start_price=start_price,
             value=currencies[request.POST.get("priceValue")]
         )
         for f in request.FILES.getlist('imageFile'):
@@ -52,6 +55,9 @@ class ProductDetailView(DetailView):
 
     def get(self, request, *args, **kwargs):
         context = {}
+        if IsDeletedProduct.objects.filter(uuid=self.kwargs['pk']).exists():
+            self.template_name = 'product_was_deleted.html'
+            return render(request, self.template_name, context)
         product = self.get_object()
         if product.deleted_at < timezone.localtime():
             IsDeletedProduct.objects.create(
@@ -63,6 +69,8 @@ class ProductDetailView(DetailView):
         elif product.closed_at < timezone.localtime():
             context['is_closed'] = True
         context['product'] = product
+        min_price = int(re.findall(r'\d+', product.min_price)[0]) + 1
+        context['min_price'] = min_price
         return render(request, self.template_name, context)
 
     def post(self, request, pk):
@@ -81,4 +89,7 @@ class ProductDetailView(DetailView):
             data = f.read()
             comment.pic.save(f.name, ContentFile(data))
             comment.save()
+        product = self.get_object()
+        product.min_price = price
+        product.save()
         return redirect('product_detail', pk=pk)
