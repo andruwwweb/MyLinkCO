@@ -20,20 +20,23 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(data => {
             if(data.length === 0) {
-                createBidsWarning()
+                createBidsWarning('Here is no bids yet, be the first!')
             } else {
-                const filteredArray = data.slice(0, 4)
-                filteredArray.forEach((object, index) => {
-                    if (index % 2 == 0) {
-                    bidTemplate(object.pic, object.name, object.price, object.text, 1)
-                    } else {
-                    bidTemplate(object.pic, object.name, object.price, object.text, 2)
+                data.forEach((object, index) => {
+                    if (index % 2 === 0 && index !== 4) {
+                        bidTemplate(object.pic, object.name, object.price, object.text, 1)
+                        }
+                    else if (index % 2 !== 0) {
+                        bidTemplate(object.pic, object.name, object.price, object.text, 2)
+                        }
+                    else if (index === 4) {
+                        showMoreButton.style.display = 'block';
                     }
                 })
-                showMoreButton.style.display = 'block';
             }
         })
         .catch(error => {
+            createBidsWarning('Something went wrong, reload the page...')
             console.log(error);
         })
 
@@ -89,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(data => {
                 data.forEach((object, index) => {
-                    if (index % 2 == 0) {
+                    if (index % 2 === 0) {
                         bidTemplate(object.pic, object.name, object.price, object.text, 1)
                     } else {
                         bidTemplate(object.pic, object.name, object.price, object.text, 2)
@@ -98,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             })
             .catch(error => {
+                createBidsWarning('Something went wrong, reload the page...')
                 console.log(error)
             })
             .finally(() => {
@@ -169,10 +173,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     //Создание шаблона
     function bidTemplate(userImage, userName, userBid, userMessage, templateNumber) {
-        if (!userImage) {
-            let imagePlaceHolder = userName.substring(1, 3).toUpperCase()
-            userImage = imagePlaceHolder
-        }
         const bids = document.querySelector('.bids')
         const template = document.createElement('div');
         template.classList.add(`bid-container-${templateNumber}`, 'bid');
@@ -182,8 +182,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="bid-template-${templateNumber}">
                 <div class="user-box-${templateNumber}">
                     <div class="box-${templateNumber}">
-                        <div class="user-image">
-                            <span>${imagePlaceHolder}</span>
+                        <div class="user-image" style="display: flex; justify-content: center; align-items: center">
+                            <div style="text-align: center;">${imagePlaceHolder}</div>
                         </div>
                         <div class="user-name-${templateNumber}">${userName}</div>
                     </div>
@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="user-box-${templateNumber}">
                     <div class="box-${templateNumber}">
                         <div class="user-image">
-                            <img class="image-${templateNumber}" src="${userImage}" alt="image_comment">
+                            <img class="image-${templateNumber}" src="${userImage}" alt="User photo">
                         </div>
                         <div class="user-name-${templateNumber}">${userName}</div>
                     </div>
@@ -212,11 +212,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     //Создание окна если нет ставок
-    function createBidsWarning() {
+    function createBidsWarning(text) {
         const bidsContainer = document.querySelector('.bids')
         const warningText = document.createElement('div');
         warningText.classList.add('warning-text')
-        warningText.textContent = 'Here is no bids yet, be the first!';
+        warningText.textContent = text;
         if (bidsContainer) {
             bidsContainer.append(warningText);
         }

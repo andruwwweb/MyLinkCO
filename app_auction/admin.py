@@ -4,8 +4,8 @@ from app_auction.models import Product, Comment, IsDeletedProduct
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['title', 'created_at', 'author', 'min_price']
-    fields = ['title', 'text', 'image', 'min_price']
+    list_display = ['title', 'created_at', 'author', 'min_price', 'start_price']
+    fields = ['title', 'text', 'image', 'min_price', 'start_price']
     list_filter = ['created_at']
 
 
