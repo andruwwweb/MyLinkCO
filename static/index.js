@@ -173,15 +173,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     //Создание шаблона
     function bidTemplate(userImage, userName, userBid, userMessage, templateNumber) {
-        if (!userImage) {
-            let imagePlaceHolder = userName.substring(1, 3).toUpperCase()
-            userImage = imagePlaceHolder
-        }
         const bids = document.querySelector('.bids')
         const template = document.createElement('div');
         template.classList.add(`bid-container-${templateNumber}`, 'bid');
-        if (userImage === null || userImage === undefined || userImage === '') {
-            const imagePlaceHolder = userName.substring(0, 2).toUpperCase()
+        if (!userImage) {
+            const imagePlaceHolder = userName.substring(1, 3).toUpperCase()
             template.innerHTML = `
             <div class="bid-template-${templateNumber}">
                 <div class="user-box-${templateNumber}">
