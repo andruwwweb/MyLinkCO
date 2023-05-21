@@ -11,7 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const copyButton = document.querySelector('.copy-button')
 
         //Вешаем слушатель на кнопку копирования ссылки
-        copyButton.addEventListener('click', () => {copyUrl()})
+        copyButton.addEventListener('click', () => {
+            copyUrl()
+        })
 
         // //Контролим значение инпута по минимальному доступному значению
         // const priceInput = document.querySelector('#newPrice')
@@ -167,16 +169,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //Копирование URl
     function copyUrl() {
-        const currentURL = window.location.href;
-        const tempInput = document.createElement('textarea');
-        tempInput.value = currentURL;
-        tempInput.style.display = 'none'
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        tempInput.setSelectionRange(0, 99999);
-        document.execCommand('copy');
+        let url = window.location.href;
+        var urlWrapper = document.createElement("input");
+        urlWrapper.setAttribute("type", "text");
+        urlWrapper.setAttribute("value", url);
+        document.body.appendChild(urlWrapper);
+        urlWrapper.select();
+        urlWrapper.setSelectionRange(0, 99999);
+        document.execCommand("copy");
         document.body.removeChild(tempInput);
     }
+    
     //Создание шаблона
     function bidTemplate(userImage, userName, userBid, userMessage, templateNumber) {
         const bids = document.querySelector('.bids')

@@ -99,40 +99,45 @@ body .container .main .copy-button {
   margin-left: 20px;
 }
 body .container .main .product-sale {
-  margin: 20px auto 20px 20px;
+  margin: 20px auto 20px 0px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: flex-start;
   align-items: flex-start;
 }
 body .container .main .product-sale .sailer-name {
+  margin-left: 12px;
+  margin-top: 16px;
   border: 3px solid #151212;
   box-shadow: -1px -2px 0px 1px #151212;
   border-radius: 20px;
   padding: 12px;
   font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 12px;
+  line-height: 18px;
 }
 body .container .main .product-sale .min-price {
+  margin-left: 12px;
   margin-top: 16px;
   border: 3px solid #151212;
   box-shadow: -1px -2px 0px 1px #151212;
   border-radius: 20px;
   padding: 12px;
   font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 12px;
+  line-height: 18px;
 }
 body .container .main .product-sale .current-price {
+  margin-left: 12px;
   margin-top: 16px;
   border: 3px solid #151212;
   box-shadow: -1px -2px 0px 1px #151212;
   border-radius: 20px;
   padding: 12px;
   font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 12px;
+  line-height: 18px;
 }
 body .container .main .product-description {
   width: calc(100% - 40px);
@@ -244,7 +249,7 @@ body .container .main .bid-container-1 .bid-template-1 .user-message-1 {
   font-weight: 400;
   font-size: 16px;
   line-height: 140%;
-  text-align: right;
+  text-align: left;
   height: fit-content;
   width: 95%;
   padding: 0 10px;
