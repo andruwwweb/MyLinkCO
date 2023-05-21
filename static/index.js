@@ -13,13 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
         //Вешаем слушатель на кнопку копирования ссылки
         copyButton.addEventListener('click', () => {copyUrl()})
 
-        //Контролим значение инпута по минимальному доступному значению
-        const priceInput = document.querySelector('#newPrice')
-        const minAvailablePrice = document.querySelector('.current-price')
-        const minPrice = minAvailablePrice.textContent
-        setTimeout(() => {
-            priceInput.min = +minPrice
-        }, 1000)
+        // //Контролим значение инпута по минимальному доступному значению
+        // const priceInput = document.querySelector('#newPrice')
+        // const minAvailablePrice = document.querySelector('.current-price')
+        // const minPrice = minAvailablePrice.textContent
+        // setTimeout(() => {
+        //     priceInput.min = +minPrice
+        // }, 1000)
         //Делаем гет запрос на сервер чтобы отрендерить первые 4 ставки
         getQuery(getTopBidsDataUrl)
         .then(response => {
