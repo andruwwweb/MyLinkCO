@@ -31,7 +31,7 @@
                     <p>Comment</p>
                     <input type="text" placeholder="Optional" name="newProductDescription" id="newProductDescription">
                     <div class="price-box-2">
-                        <input type="number" placeholder="0" required name="newPrice">
+                        <input type="number" placeholder="0" required name="newPrice" id="newPrice">
                     <div class="currency">
                         {{ product.value }}
                     </div>
@@ -71,7 +71,9 @@
             </div>
             <div class="product-sale">
                 <div class="sailer-name">Seller: {{ product.author }}</div>
-                <div class="min-price">min: {{ product.min_price }}</div>
+                <div class="min-price">Start price: {{ product.min_price }}</div>
+                <div class="current-price">Current price: {{ СЮДА ВСТАВЛЯЙ }}</div>
+
             </div>
             <div class="product-description">
                 {{ product.text }}

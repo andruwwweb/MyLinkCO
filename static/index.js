@@ -8,7 +8,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const id = uuidWrapper.innerText;
         const getTopBidsDataUrl = `/api/comments/?end_count=5&product_id=${id}`;
         const showMoreButton = document.querySelector('.show-more');
+        const copyButton = document.querySelector('.copy-button')
 
+        //Вешаем слушатель на кнопку копирования ссылки
+        copyButton.addEventListener('click', () => {copyUrl()})
+
+        //Контролим значение инпута по минимальному доступному значению
+        const priceInput = document.querySelector('#newPrice')
+        const minAvailablePrice = document.querySelector('.current-price')
+        const minPrice = minAvailablePrice.textContent
+        setTimeout(() => {
+            priceInput.min = +minPrice
+        }, 1000)
         //Делаем гет запрос на сервер чтобы отрендерить первые 4 ставки
         getQuery(getTopBidsDataUrl)
         .then(response => {
@@ -109,22 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 showMoreButton.style.display = 'none';
             })
         })
-        //Создаем значение минимальной ставки
-        const priceInput = document.querySelector('.price-box-2 input')
-        const prices  = document.querySelectorAll('.user-bid')
-        const minPrice = document.querySelector('.min-price')
-
-        if (prices.length > 0) {
-            let bidsArr = []
-            prices.forEach(item => {
-                bidsArr.push(item.match(/\d+/g))
-            })
-            const maxBid = Math.max(...bidsArr)
-
-            priceInput.min = +maxBid
-        } else {
-            priceInput.min = +minPrice.textContent.match(/\d+/g)
-        }
     }
 
     //Страница добавления продукта
@@ -160,8 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-
     //Функции
 
     //Гет запрос
@@ -171,6 +164,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         return result;
     };
+
+    //Копирование URl
+    function copyUrl() {
+        const currentURL = window.location.href;
+        const tempInput = document.createElement('textarea');
+        tempInput.value = currentURL;
+        tempInput.style.display = 'none'
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        tempInput.setSelectionRange(0, 99999);
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+    }
     //Создание шаблона
     function bidTemplate(userImage, userName, userBid, userMessage, templateNumber) {
         const bids = document.querySelector('.bids')
@@ -222,36 +228,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 })
-
-
-// addFrom.addEventListener('submit', (e) => {
-//     e.preventDefault();
-//     const data = new FormData(addFrom);
-//     const file = fileInput.files[0];
-//     const url = URL.createObjectURL(file);
-//     let jsonBody = formDataToJson(data);
-//     jsonBody.imageFile = url;
-//     postQuery('/product/create/', jsonBody)
-//     .then(response => {
-//         if(!response.ok) {
-//             throw new Error(response.status)
-//         }
-//         else {
-//             return;
-//         }
-//     })
-//     .catch(error => {
-//         console.error(error)
-//         renderServerResponse(data.message)
-//     })
-//     .finally(() => {
-//         addFrom.reset()
-//     })
-// })
-// function formDataToJson(formData) {
-//     const jsonData = {};
-//     for (const [key, value] of formData.entries()) {
-//         jsonData[key] = value;
-//     }
-//     return jsonData;
-// };
