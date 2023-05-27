@@ -182,9 +182,10 @@ document.addEventListener('DOMContentLoaded', () => {
     //Копирование URl
     function copyUrl() {
         let url = window.location.href;
-        var urlWrapper = document.createElement("input");
+        let urlWrapper = document.createElement("input");
         urlWrapper.setAttribute("type", "text");
         urlWrapper.setAttribute("value", url);
+        urlWrapper.style.transform = "scale(0)"
         document.body.appendChild(urlWrapper);
         urlWrapper.select();
         urlWrapper.setSelectionRange(0, 99999);
