@@ -192,7 +192,7 @@ body .container .main .bid-container-1 .bid-template-1 {
   box-shadow: -5px -5px 0px 1px #151212;
   border-radius: 20px;
   padding: 10px;
-  min-width: 270px;
+  width: 97%;
 }
 @media (min-width: 400px) and (max-width: 460px) {
   body .container .main .bid-container-1 .bid-template-1 {
@@ -270,7 +270,7 @@ body .container .main .bid-container-2 .bid-template-2 {
   box-shadow: 5px -5px 0px 1px #151212;
   border-radius: 20px;
   padding: 10px;
-  min-width: 270px;
+  width: 97%;
 }
 @media (min-width: 400px) and (max-width: 460px) {
   body .container .main .bid-container-2 .bid-template-2 {
@@ -635,15 +635,6 @@ body .container .footer .support-tinkoff {
 }
 .l-main .price-box input::placeholder {
   font-size: 22px;
-}
-.l-main .price-box .arrow {
-  position: absolute;
-  right: 3px;
-  top: 12px;
-  height: 30px;
-  width: 20px;
-  background: white;
-  z-index: 10;
 }
 .l-main .price-box select {
   padding: 15px 5px;

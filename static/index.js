@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
         urlWrapper.select();
         urlWrapper.setSelectionRange(0, 99999);
         document.execCommand("copy");
-        document.body.removeChild(tempInput);
+        document.body.removeChild(urlWrapper);
     }
     
     //Создание шаблона
