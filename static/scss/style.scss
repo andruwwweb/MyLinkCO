@@ -55,7 +55,9 @@ body {
                 transform: translateX(4px) translateY(4px);
             }
         }
-
+        .validateUserName {
+            display: none;
+        }
         .main {
             width: 100%;
             .trading-end {

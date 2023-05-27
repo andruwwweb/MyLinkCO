@@ -50,6 +50,9 @@ body .container .header .header-button-active {
   transition: all 0.3s ease-in-out;
   transform: translateX(4px) translateY(4px);
 }
+body .container .validateUserName {
+  display: none;
+}
 body .container .main {
   width: 100%;
 }

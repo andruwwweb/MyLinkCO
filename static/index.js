@@ -15,13 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
             copyUrl()
         })
 
-        // //Контролим значение инпута по минимальному доступному значению
-        // const priceInput = document.querySelector('#newPrice')
-        // const minAvailablePrice = document.querySelector('.current-price')
-        // const minPrice = minAvailablePrice.textContent
-        // setTimeout(() => {
-        //     priceInput.min = +minPrice
-        // }, 1000)
         //Делаем гет запрос на сервер чтобы отрендерить первые 4 ставки
         getQuery(getTopBidsDataUrl)
         .then(response => {
@@ -121,6 +114,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log('Already load.');
                 showMoreButton.style.display = 'none';
             })
+        })
+
+        //Валидация инпута имени
+        const nameInput = document.querySelector('#newUserName')
+        const errorMessage = document.querySelector('.validateUserName')
+        const addBidButton = document.querySelector('.addBidButton')
+
+        nameInput.addEventListener('input', function() {
+            const inputValue = this.value
+            const validationPattern = /^[A-Za-z0-9\-_.]+$/;
+
+            if (!validationPattern.test(inputValue)) {
+                errorMessage.style.display = 'block'
+                addBidButton.disabled = true
+            }
+            else {
+                errorMessage.style.display = 'none'
+                addBidButton.disabled = false
+            }
         })
     }
 

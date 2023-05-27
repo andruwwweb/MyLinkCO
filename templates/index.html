@@ -27,7 +27,8 @@
                         <input type="file" name="modalImage" id="modalImage">
                     </label>
                     <p>Nickname</p>
-                    <input type="text" placeholder="@instagram, Telegram" required id="newUserName" name="newUserName" maxlength="12">
+                    <input style="margin-bottom: 12px;" type="text" placeholder="@instagram, Telegram" required id="newUserName" name="newUserName" maxlength="12">
+                    <p class="validateUserName" style="font-size: 12px; color: red; line-height: 14px; text-transform: none;">This field is required and name should contains only letters A-Z/a-z, numbers and symbols "_ - ."</p>
                     <p>Comment</p>
                     <input type="text" placeholder="Optional" name="newProductDescription" id="newProductDescription">
                     <div class="price-box-2">
@@ -36,7 +37,7 @@
                         {{ product.value }}
                     </div>
                     </div>
-                    <button type="submit">done</button>
+                    <button class="addBidButton" type="submit">done</button>
                 </form>
             </div>
         </div>
