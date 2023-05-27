@@ -24,7 +24,7 @@
                     {% csrf_token %}
                     <div class="add-text-modal">Add a photo</div>
                     <label for="modalImage">
-                        <input type="file" name="modalImage" id="modalImage">
+                        <input type="file" name="modalImage" id="modalImage" accept="image/*">
                     </label>
                     <p>Nickname</p>
                     <input style="margin-bottom: 12px;" type="text" placeholder="@instagram, Telegram" required id="newUserName" name="newUserName" maxlength="12">
